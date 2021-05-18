@@ -40,7 +40,6 @@ exports.googleLogout = async (req, res) => {
 };
 
 exports.getUserData = (req, res) => {
-  console.log(req.session.userId);
   res.status(200);
   res.json(req.user);
 };

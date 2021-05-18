@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const User = require("./models/user");
 const userRoutes = require("./routes/users");
-const postRoutes = require("./routes/posts");
 
 const app = express();
 
@@ -45,4 +44,3 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/api/v1/auth", userRoutes);
-app.use("/api/v1/posts", postRoutes);
