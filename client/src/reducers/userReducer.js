@@ -8,6 +8,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
+      console.log({ ...state, isSignedIn: true, userInfo: action.payload });
       return { ...state, isSignedIn: true, userInfo: action.payload }; //immute changing object
     case LOGOUT:
       return { ...state, isSignedIn: false, userInfo: null };

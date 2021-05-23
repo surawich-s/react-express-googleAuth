@@ -14,6 +14,3 @@ export const googleAuthLogin = (data) =>
     }
   );
 export const googleAuthLogout = () => axios.delete(authUrl + "/logout");
-
-export const fetchPosts = () => axios.get(postUrl);
-export const createPost = (newPost) => axios.post(postUrl, newPost);
