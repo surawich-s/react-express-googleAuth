@@ -4,7 +4,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import Posts from "./pages/Posts";
 import Profile from "./pages/Profile";
-import Header from "./Header";
+import Layout from "./Layout";
 
 const theme = createMuiTheme({
   palette: {
@@ -26,15 +26,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <Posts />
-          </Route>
-          <Route path="/profile/:id">
-            <Profile />
-          </Route>
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route exact path="/">
+              <Posts />
+            </Route>
+            <Route path="/profile/:id">
+              <Profile />
+            </Route>
+          </Switch>
+        </Layout>
       </Router>
     </ThemeProvider>
   );
