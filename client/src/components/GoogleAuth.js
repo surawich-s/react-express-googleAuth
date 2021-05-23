@@ -38,6 +38,7 @@ function GoogleAuth(props) {
           buttonText="Login"
           onSuccess={handleLogin}
           onFailure={handleLogin}
+          isSignedIn={true}
           cookiePolicy={"single_host_origin"}
         />
       );

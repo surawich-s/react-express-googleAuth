@@ -1,11 +1,10 @@
 import axios from "axios";
 
-const authUrl = "http://localhost:5000/api/v1/auth";
-const postUrl = "http://localhost:5000/api/v1/posts";
+const Url = "http://localhost:5000/api/v1/";
 
 export const googleAuthLogin = (data) =>
   axios.post(
-    authUrl + "/google",
+    Url + "/google",
     { token: data },
     {
       headers: {
@@ -13,4 +12,6 @@ export const googleAuthLogin = (data) =>
       },
     }
   );
-export const googleAuthLogout = () => axios.delete(authUrl + "/logout");
+export const googleAuthLogout = () => axios.delete(Url + "/logout");
+
+export const fetchUser = (id) => axios.get(Url + `/user/${id}`);

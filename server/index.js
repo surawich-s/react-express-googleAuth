@@ -43,4 +43,4 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/", userRoutes);

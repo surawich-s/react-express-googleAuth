@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -7,6 +7,8 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import { Avatar, Button, Box } from "@material-ui/core";
 import AddAPhotoOutlinedIcon from "@material-ui/icons/AddAPhotoOutlined";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router";
+import { fetchUser } from "../../actions/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile() {
   const classes = useStyles();
-  const user = useSelector((state) => state.user.userInfo);
+  const user = useSelector((state) => state.user.fetchedUser);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchUser(id));
+  }, []);
+  if (!user) {
+    return <div>Loading</div>;
+  }
 
   return (
     <div className={classes.root}>
