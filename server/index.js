@@ -6,11 +6,12 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const User = require("./models/user");
 const userRoutes = require("./routes/users");
+const postRoutes = require("./routes/posts");
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 app.use(cookieParser());
 app.use(
@@ -44,3 +45,4 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/api/v1/", userRoutes);
+app.use("/api/v1/posts", postRoutes);

@@ -9,6 +9,7 @@ import AddAPhotoOutlinedIcon from "@material-ui/icons/AddAPhotoOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { fetchUser } from "../../actions/";
+import PostForm from "../Forms/PostForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +82,7 @@ function Profile() {
           Add Post
         </Button>
       </Box>
+      <PostForm id={id} />
     </div>
   );
 }

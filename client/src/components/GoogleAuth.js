@@ -1,11 +1,12 @@
 import React from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 import { googleLogin, googleLogout } from "../actions";
 
 function GoogleAuth(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const authStatus = useSelector((state) => state.user.isSignedIn);
 
   // useEffect(() => {
@@ -20,6 +21,7 @@ function GoogleAuth(props) {
 
   const handleLogout = async () => {
     dispatch(googleLogout());
+    history.push("/");
   };
 
   const renderedAuth = () => {

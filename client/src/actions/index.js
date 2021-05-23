@@ -1,5 +1,10 @@
 import * as api from "../api";
-import { LOGIN, LOGOUT, FETCH_USER } from "../constants/actionTypes";
+import {
+  LOGIN,
+  LOGOUT,
+  FETCH_USER,
+  CREATE_POST,
+} from "../constants/actionTypes";
 
 // User actions
 
@@ -31,3 +36,12 @@ export const fetchUser = (id) => async (dispatch) => {
 };
 
 // Post actions
+
+export const createPost = (post) => async (dispatch) => {
+  try {
+    const { data } = await api.createPost(post);
+    dispatch({ type: CREATE_POST, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};

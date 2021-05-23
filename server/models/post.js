@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  userName: String,
   userId: String,
-  profileLogo: String,
-  profileLink: String,
   postImage: String,
   postDescription: String,
   likeCount: {

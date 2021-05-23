@@ -7,8 +7,8 @@ exports.createPost = async (req, res) => {
 
   try {
     await newPost.save();
-    console.log(req.body);
     res.status(201).json(newPost);
+    console.log("Post created by " + newPost.userId);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
