@@ -64,6 +64,7 @@ function PostForm({ id }) {
     e.preventDefault();
     if (postData.postImage) {
       dispatch(createPost(postData));
+      handleClose();
       history.push(`/profile/${id}`);
     }
   };
