@@ -1,9 +1,15 @@
-import { LOGIN, LOGOUT, FETCH_USER } from "../constants/actionTypes";
+import {
+  LOGIN,
+  LOGOUT,
+  FETCH_USER,
+  FETCH_USER_POSTS,
+} from "../constants/actionTypes";
 
 const INITIAL_STATE = {
   isSignedIn: false,
   userInfo: null, //store signed in userId
   fetchedUser: null,
+  userPosts: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -14,6 +20,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, isSignedIn: false, userInfo: null };
     case FETCH_USER:
       return { ...state, fetchedUser: action.payload };
+    case FETCH_USER_POSTS:
+      return { ...state, userPosts: action.payload };
     default:
       return state;
   }

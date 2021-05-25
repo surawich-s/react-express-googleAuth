@@ -21,3 +21,6 @@ export const fetchUser = (id) => axios.get(Url + `/user/${id}`);
 // posts
 
 export const createPost = (post) => axios.post(Url + "/posts", post);
+
+export const fetchUserPosts = (id) =>
+  axios.get(Url + "/posts", { params: { id } });

@@ -7,8 +7,9 @@ import ButtonBase from "@material-ui/core/ButtonBase";
 import { Avatar } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { fetchUser } from "../../actions/";
+import { fetchUser, fetchUserPosts } from "../../actions/";
 import PostForm from "../Forms/PostForm";
+import UserPosts from "../UserPosts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,15 +30,27 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile() {
   const classes = useStyles();
-  const user = useSelector((state) => state.user.fetchedUser);
+  const { user, posts } = useSelector((state) => ({
+    user: state.user.fetchedUser,
+    posts: state.user.userPosts,
+  }));
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchUser(id));
-  }, []);
+    function fetchUserAndPost() {
+      dispatch(fetchUser(id));
+      dispatch(fetchUserPosts(id));
+      // console.log(posts);
+    }
+    fetchUserAndPost();
+  }, [dispatch]);
   if (!user) {
     return <div>Loading</div>;
+  }
+
+  if (!posts) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -68,6 +81,7 @@ function Profile() {
         </Grid>
       </Paper>
       <PostForm id={id} />
+      <UserPosts posts={posts} id={id} />
     </div>
   );
 }

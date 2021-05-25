@@ -14,3 +14,13 @@ exports.createPost = async (req, res) => {
   }
   // res.send("POSTED");
 };
+
+exports.fetchUserPosts = async (req, res) => {
+  const { id } = req.query;
+
+  console.log(id);
+
+  const posts = await Post.find({ userId: id });
+
+  res.status(201).json(posts);
+};
