@@ -4,8 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { Avatar, Button, Box } from "@material-ui/core";
-import AddAPhotoOutlinedIcon from "@material-ui/icons/AddAPhotoOutlined";
+import { Avatar } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { fetchUser } from "../../actions/";
@@ -25,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(18),
     height: theme.spacing(18),
-  },
-  button: {
-    margin: theme.spacing(1),
-    alignSelf: "center",
   },
 }));
 
@@ -72,16 +67,6 @@ function Profile() {
           </Grid>
         </Grid>
       </Paper>
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          startIcon={<AddAPhotoOutlinedIcon />}
-        >
-          Add Post
-        </Button>
-      </Box>
       <PostForm id={id} />
     </div>
   );
