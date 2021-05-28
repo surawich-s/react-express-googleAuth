@@ -42,9 +42,7 @@ function UserPost({ post }) {
         aria-describedby="simple-modal-description"
         className={classes.modal}
       >
-        <div>
-          <PostDetail post={post} />
-        </div>
+        <PostDetail post={post} />
       </Modal>
     </>
   );

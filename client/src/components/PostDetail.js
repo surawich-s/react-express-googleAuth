@@ -14,11 +14,15 @@ import {
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const useStyles = makeStyles((theme) => ({
-  card: {
+  root: {
     display: "flex",
+    maxWidth: "800px",
+    positon: "fixed",
   },
   image: {
-    width: theme.spacing(100),
+    width: "600px",
+    height: 0,
+    paddingTop: "56.25%",
   },
   detail: {
     display: "flex",
@@ -30,12 +34,8 @@ function PostDetail({ post }) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.image}
-        style={{ height: 0, paddingTop: "56.25%" }}
-        image={post.postImage}
-      />
+    <Card className={classes.root}>
+      <CardMedia className={classes.media} image={post.postImage} />
       <Container className={classes.detail}>
         <CardHeader
           id="simple-modal-title"
