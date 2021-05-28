@@ -53,6 +53,15 @@ function Profile() {
     return <div>Loading...</div>;
   }
 
+  // const handleOpen = () => {
+  //   console.log("Modal Open");
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper} elevation={0}>
@@ -80,7 +89,7 @@ function Profile() {
           </Grid>
         </Grid>
       </Paper>
-      <PostForm id={id} />
+      <PostForm id={id} userName={user.name} userAvatar={user.picture} />
       <UserPosts posts={posts} id={id} />
     </div>
   );

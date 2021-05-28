@@ -15,10 +15,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserPosts({ posts, id }) {
+function UserPosts({ posts }) {
   const classes = useStyles();
-
-  console.log(posts);
 
   if (!posts) {
     return <CircularProgress />;

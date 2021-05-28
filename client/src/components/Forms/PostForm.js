@@ -40,12 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PostForm({ id }) {
+function PostForm({ id, userName, userAvatar }) {
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const [postData, setPostData] = useState({
     userId: id,
+    userName: userName,
+    userAvatar: userAvatar,
     postImage: "",
     postDescription: "",
   });
@@ -53,7 +55,6 @@ function PostForm({ id }) {
 
   const handleOpen = () => {
     setOpen(true);
-    console.log(open);
   };
 
   const handleClose = () => {
