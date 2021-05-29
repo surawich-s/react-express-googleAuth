@@ -16,11 +16,15 @@ exports.createPost = async (req, res) => {
 };
 
 exports.fetchUserPosts = async (req, res) => {
-  const { id } = req.query;
-
-  console.log(id);
+  const { id } = req.params;
 
   const posts = await Post.find({ userId: id });
 
+  res.status(201).json(posts);
+};
+
+exports.fetchPosts = async (req, res) => {
+  const posts = await Post.find();
+  console.log(posts);
   res.status(201).json(posts);
 };

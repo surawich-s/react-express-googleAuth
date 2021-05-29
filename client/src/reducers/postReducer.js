@@ -1,4 +1,5 @@
-import { CREATE_POST, HANDLE_USER_POST_MODAL } from "../constants/actionTypes";
+import { CREATE_POST, FETCH_POSTS } from "../constants/actionTypes";
+import _, { mapKeys } from "lodash";
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -6,9 +7,8 @@ export default (state = {}, action) => {
       return { ...state, [action.payload._id]: action.payload };
     // case FETCH_USER_POSTS:
     //   return action.payload;
-    case HANDLE_USER_POST_MODAL:
-      return action.payload;
-
+    case FETCH_POSTS:
+      return { ...state, ..._.mapKeys(action.payload, "_id") };
     default:
       return state;
   }
