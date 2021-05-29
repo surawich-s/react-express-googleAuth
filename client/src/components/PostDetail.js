@@ -2,7 +2,6 @@ import React, { forwardRef } from "react";
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
   CardActions,
   Typography,
@@ -16,6 +15,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "80%",
   },
   media: {
     width: 600,
@@ -34,7 +34,11 @@ function PostDetail({ post }, ref) {
   return (
     <Card className={classes.root} ref={ref}>
       {/* <CardMedia className={classes.media} image={post.postImage} /> */}
-      <img className={classes.media} src={post.postImage} />
+      <img
+        className={classes.media}
+        src={post.postImage}
+        alt={post.postDescription}
+      />
       <Container className={classes.detail}>
         <CardHeader
           id="simple-modal-title"

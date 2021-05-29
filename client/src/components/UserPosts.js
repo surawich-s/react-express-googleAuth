@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import UserPost from "./UserPost";
 import PostDetail from "./PostDetail";
-import {
-  Grid,
-  CircularProgress,
-  Container,
-  makeStyles,
-  Box,
-  Modal,
-} from "@material-ui/core";
+import { Grid, Container, makeStyles, Box, Modal } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   userPostsBox: {
@@ -27,10 +20,6 @@ function UserPosts({ posts }) {
   const ref = React.useRef();
   const [currentPost, setCurrentPost] = useState(null);
   const [open, setOpen] = useState(false);
-
-  if (!posts) {
-    return <CircularProgress />;
-  }
 
   const handleModal = (post) => {
     setCurrentPost(post);

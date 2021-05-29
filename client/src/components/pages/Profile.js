@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import { Avatar } from "@material-ui/core";
+import { Avatar, LinearProgress } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { fetchUser, fetchUserPosts } from "../../actions/";
@@ -45,12 +45,9 @@ function Profile() {
     }
     fetchUserAndPost();
   }, [dispatch]);
-  if (!user) {
-    return <div>Loading</div>;
-  }
 
-  if (!posts) {
-    return <div>Loading...</div>;
+  if (!posts || !user) {
+    return <LinearProgress />;
   }
 
   // const handleOpen = () => {
