@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import { makeStyles, Modal } from "@material-ui/core";
-import PostDetail from "./PostDetail";
-
+import React from "react";
+import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   image: {
     width: "300px",
@@ -15,35 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserPost({ post }) {
+function UserPost({ post, handleModal }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
-    console.log("Modal Opened");
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
   return (
     <>
       <img
         className={classes.image}
         src={post.postImage}
         alt={post._id}
-        onClick={handleOpen}
+        onClick={() => handleModal(post)}
       />
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        className={classes.modal}
-      >
-        <PostDetail post={post} />
-      </Modal>
     </>
   );
 }

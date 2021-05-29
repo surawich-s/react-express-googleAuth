@@ -5,6 +5,7 @@ import {
   FETCH_USER,
   CREATE_POST,
   FETCH_USER_POSTS,
+  HANDLE_USER_POST_MODAL,
 } from "../constants/actionTypes";
 
 // User actions
@@ -54,4 +55,8 @@ export const fetchUserPosts = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const handleUserPostModal = (post) => (dispatch) => {
+  dispatch({ type: HANDLE_USER_POST_MODAL, payload: post });
 };

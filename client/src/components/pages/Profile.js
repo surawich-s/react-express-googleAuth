@@ -10,6 +10,7 @@ import { useParams } from "react-router";
 import { fetchUser, fetchUserPosts } from "../../actions/";
 import PostForm from "../Forms/PostForm";
 import UserPosts from "../UserPosts";
+import PostDetailModal from "../PostDetailModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
