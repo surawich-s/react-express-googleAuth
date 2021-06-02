@@ -4,27 +4,28 @@ import {
   CardHeader,
   CardContent,
   CardActions,
+  CardMedia,
   Typography,
   Avatar,
   IconButton,
   makeStyles,
+  Box,
   Container,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    width: "80%",
+    // display: "flex",
+    // flexDirection: "column",
+    width: 600,
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   media: {
     width: 600,
     height: 600,
     // paddingTop: "56.25%",
-  },
-  detail: {
-    display: "flex",
-    flexDirection: "column",
   },
 }));
 
@@ -32,14 +33,8 @@ function PostDetail({ post }, ref) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} ref={ref}>
-      {/* <CardMedia className={classes.media} image={post.postImage} /> */}
-      <img
-        className={classes.media}
-        src={post.postImage}
-        alt={post.postDescription}
-      />
-      <Container className={classes.detail}>
+    <Box style={{ display: "inline-block" }}>
+      <Card className={classes.root} ref={ref}>
         <CardHeader
           id="simple-modal-title"
           avatar={
@@ -56,7 +51,16 @@ function PostDetail({ post }, ref) {
           }
           title={post.userName}
         />
+        <CardMedia className={classes.media} image={post.postImage} />
         <CardContent>
+          <Typography
+            id="simple-modal-description"
+            variant="body2"
+            color="textPrimary"
+            component="p"
+          >
+            {post.userName}
+          </Typography>
           <Typography
             id="simple-modal-description"
             variant="body2"
@@ -66,8 +70,8 @@ function PostDetail({ post }, ref) {
             {post.postDescription}
           </Typography>
         </CardContent>
-      </Container>
-    </Card>
+      </Card>
+    </Box>
   );
 }
 

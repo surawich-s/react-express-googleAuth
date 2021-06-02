@@ -1,21 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../../actions";
-import {
-  CircularProgress,
-  makeStyles,
-  Container,
-  Box,
-} from "@material-ui/core";
+import { CircularProgress, makeStyles, Grid } from "@material-ui/core";
 import PostDetail from "../PostDetail";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   post: {
     marginTop: 20,
     marginBottom: 20,
@@ -36,13 +25,13 @@ function Posts(props) {
   }
 
   return (
-    <Container className={classes.root}>
+    <Grid container direction="column" justify="flex-start" alignItems="center">
       {posts.map((post) => (
-        <Container className={classes.post}>
+        <Grid className={classes.post} item xs={12}>
           <PostDetail post={post} key={post._id} />
-        </Container>
+        </Grid>
       ))}
-    </Container>
+    </Grid>
   );
 }
 
