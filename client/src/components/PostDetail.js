@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,9 +10,13 @@ import {
   IconButton,
   makeStyles,
   Box,
-  Container,
+  TextField,
+  Button,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,10 +31,29 @@ const useStyles = makeStyles((theme) => ({
     height: 600,
     // paddingTop: "56.25%",
   },
+  actionbar: {
+    paddingBottom: 0,
+  },
+  content: {
+    paddingTop: 0,
+  },
+  commentform: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  field: {
+    display: "block",
+    border: "none",
+  },
+  noBorder: {
+    border: "none",
+  },
 }));
 
 function PostDetail({ post }, ref) {
   const classes = useStyles();
+
+  const handleSubmit = () => {};
 
   return (
     <Box style={{ display: "inline-block" }}>
@@ -52,23 +75,58 @@ function PostDetail({ post }, ref) {
           title={post.userName}
         />
         <CardMedia className={classes.media} image={post.postImage} />
+        <CardActions className={classes.actionbar}>
+          <IconButton aria-label="like">
+            <FavoriteBorderIcon />
+          </IconButton>
+          <IconButton aria-label="comment">
+            <ChatBubbleOutlineIcon />
+          </IconButton>
+          <IconButton aria-label="save" style={{ marginLeft: "auto" }}>
+            <BookmarkBorderIcon />
+          </IconButton>
+        </CardActions>
+        <CardContent className={classes.content}>
+          <Typography variant="body1" color="textPrimary" component="p">
+            {post.userName}{" "}
+            <span style={{ textDecorationStyle: "none" }}>
+              {post.postDescription}
+            </span>
+          </Typography>
+          <Typography variant="body1"></Typography>
+        </CardContent>
         <CardContent>
-          <Typography
-            id="simple-modal-description"
-            variant="body2"
-            color="textPrimary"
-            component="p"
+          <form
+            className={classes.commentform}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit}
           >
-            {post.userName}
-          </Typography>
-          <Typography
-            id="simple-modal-description"
-            variant="body2"
-            color="textPrimary"
-            component="p"
-          >
-            {post.postDescription}
-          </Typography>
+            <TextField
+              // onChange={
+              // }
+              className={classes.field}
+              variant="outlined"
+              multiline
+              rows={1}
+              fullWidth
+              placeholder="Add a comment..."
+              required
+              margin="none"
+              InputProps={{
+                classes: { notchedOutline: classes.noBorder },
+              }}
+            />
+            <CardActions>
+              <Button
+                style={{ marginLeft: "auto" }}
+                type="submit"
+                color="primary"
+              >
+                Post
+              </Button>
+            </CardActions>
+          </form>
         </CardContent>
       </Card>
     </Box>

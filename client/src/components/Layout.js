@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import Avatar from "@material-ui/core/Avatar";
+import { Button } from "@material-ui/core";
 
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "70px",
     marginBottom: "20px",
+    backgroundColor: "#fefefe",
   },
   menuButton: {
     marginLeft: theme.spacing(15),
@@ -57,13 +59,13 @@ function Layout({ children }) {
           <IconButton
             edge="start"
             className={classes.menuButton}
-            color="inherit"
+            color="secondary"
             aria-label="menu"
             onClick={() => history.push("/")}
           >
             <InstagramIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} color="secondary">
             Instagram
           </Typography>
           {renderedSignIn()}
