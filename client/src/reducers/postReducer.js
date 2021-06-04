@@ -1,4 +1,8 @@
-import { CREATE_POST, FETCH_POSTS } from "../constants/actionTypes";
+import {
+  CREATE_POST,
+  FETCH_POSTS,
+  CREATE_POST_COMMENT,
+} from "../constants/actionTypes";
 
 export default (state = [], action) => {
   switch (action.type) {
@@ -8,6 +12,10 @@ export default (state = [], action) => {
     //   return action.payload;
     case FETCH_POSTS:
       return action.payload;
+    case CREATE_POST_COMMENT:
+      return state.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
     default:
       return state;
   }

@@ -67,9 +67,9 @@ export const fetchPosts = () => async (dispatch) => {
   }
 };
 
-export const updatePost = (id, updatedPost) => async (dispatch) => {
+export const updatePost = (id, comment) => async (dispatch) => {
   try {
-    const { data } = await api.updatePost(id, updatedPost);
+    const { data } = await api.updatePost(id, comment);
     dispatch({ type: CREATE_POST_COMMENT, payload: data });
   } catch (error) {
     console.log(error);

@@ -25,22 +25,37 @@ exports.fetchUserPosts = async (req, res) => {
 
 exports.fetchPosts = async (req, res) => {
   const posts = await Post.find();
-  console.log(posts);
+  // console.log(posts);
   res.status(201).json(posts);
 };
 
 exports.updatePost = async (req, res) => {
   // similar to update
-  const post = req.body;
+  const { userId, userName, commentDetail, createdAt } = req.body;
   const { id } = req.params;
-  const updatedPost = new Post({ _id: id }, post);
 
-  console.log(updatedPost);
-
+  await Post.findAndUpdate(
+    { _id: id },
+    {
+      $push: {
+        comments: {
+          userId: userId,
+          userName: userName,
+          commentDetail: commentDetail,
+          createdAt: createdAt,
+        },
+      },
+    },
+    { new: true },
+    (err, result) => {
+      // Rest of the action goes here
+    }
+  );
   // try {
-  // await updatedPost.save()
-  // res.status(201).json(updatedPost);
+  //   const updatedPost = await toBeSavedPost.save();
+  //   console.log(updatedPost);
+  //   res.status(201).json(updatedPost);
   // } catch (error) {
-  //   res.status(409).json({ message: error.message })
+  //   res.status(409).json({ message: error.message });
   // }
 };

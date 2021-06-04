@@ -52,30 +52,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const INITIAL_STATE = {
+  userId: "",
+  userName: "",
+  commentDetail: "",
+  createdAt: "",
+};
+
 function PostDetail({ post }, ref) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.userInfo);
 
-  const [comment, setComment] = useState({
-    userId: "proto",
-    userName: "proto",
-    commentDetail: "",
-    createdAt: {
-      type: Date,
-      default: new Date(),
-    },
-  });
+  const [comment, setComment] = useState(INITIAL_STATE);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user) {
-      post.comments.push(comment);
+      // post.comments.push(comment);
+      // console.log(post);
+      dispatch(updatePost(post._id, comment));
+      // post.comments.pop(comment);
     }
-
-    console.log(post);
-    dispatch(updatePost(post));
-    setComment(null);
+    setComment(INITIAL_STATE);
   };
 
   return (
@@ -126,8 +125,7 @@ function PostDetail({ post }, ref) {
             onSubmit={handleSubmit}
           >
             <TextField
-              // onChange={
-              // }
+              value={comment.commentDetail}
               className={classes.field}
               variant="outlined"
               onChange={(e) =>
@@ -136,6 +134,7 @@ function PostDetail({ post }, ref) {
                   commentDetail: e.target.value,
                   userId: user._id,
                   userName: user.name,
+                  createdAt: new Date(),
                 }))
               }
               multiline
