@@ -26,3 +26,6 @@ export const fetchUserPosts = (id) =>
   axios.get(Url + `/posts/${id}`, { params: { id } });
 
 export const fetchPosts = () => axios.get(Url + "/posts");
+
+export const updatePost = (id, updatedPost) =>
+  axios.post(Url + `/posts/${id}`, updatedPost);

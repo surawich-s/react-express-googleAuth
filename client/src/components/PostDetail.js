@@ -17,6 +17,8 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import { useDispatch, useSelector } from "react-redux";
+import { updatePost } from "../actions/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,8 +54,29 @@ const useStyles = makeStyles((theme) => ({
 
 function PostDetail({ post }, ref) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.userInfo);
 
-  const handleSubmit = () => {};
+  const [comment, setComment] = useState({
+    userId: "proto",
+    userName: "proto",
+    commentDetail: "",
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (user) {
+      post.comments.push(comment);
+    }
+
+    console.log(post);
+    dispatch(updatePost(post));
+    setComment(null);
+  };
 
   return (
     <Box style={{ display: "inline-block" }}>
@@ -107,6 +130,14 @@ function PostDetail({ post }, ref) {
               // }
               className={classes.field}
               variant="outlined"
+              onChange={(e) =>
+                setComment((prevState) => ({
+                  ...prevState,
+                  commentDetail: e.target.value,
+                  userId: user._id,
+                  userName: user.name,
+                }))
+              }
               multiline
               rows={1}
               fullWidth

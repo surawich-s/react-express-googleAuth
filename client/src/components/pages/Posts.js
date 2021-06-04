@@ -27,8 +27,8 @@ function Posts(props) {
   return (
     <Grid container direction="column" justify="flex-start" alignItems="center">
       {posts.map((post) => (
-        <Grid className={classes.post} item xs={12}>
-          <PostDetail post={post} key={post._id} />
+        <Grid className={classes.post} item xs={12} key={post._id}>
+          <PostDetail post={post} />
         </Grid>
       ))}
     </Grid>

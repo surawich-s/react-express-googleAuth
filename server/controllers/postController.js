@@ -28,3 +28,19 @@ exports.fetchPosts = async (req, res) => {
   console.log(posts);
   res.status(201).json(posts);
 };
+
+exports.updatePost = async (req, res) => {
+  // similar to update
+  const post = req.body;
+  const { id } = req.params;
+  const updatedPost = new Post({ _id: id }, post);
+
+  console.log(updatedPost);
+
+  // try {
+  // await updatedPost.save()
+  // res.status(201).json(updatedPost);
+  // } catch (error) {
+  //   res.status(409).json({ message: error.message })
+  // }
+};
