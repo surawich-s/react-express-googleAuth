@@ -31,31 +31,17 @@ exports.fetchPosts = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   // similar to update
-  const { userId, userName, commentDetail, createdAt } = req.body;
+  const comment = req.body;
   const { id } = req.params;
+  try {
+    const updatedPost = await Post.findOneAndUpdate(
+      { _id: id },
+      { $push: { comments: comment } }
+    );
 
-  await Post.findAndUpdate(
-    { _id: id },
-    {
-      $push: {
-        comments: {
-          userId: userId,
-          userName: userName,
-          commentDetail: commentDetail,
-          createdAt: createdAt,
-        },
-      },
-    },
-    { new: true },
-    (err, result) => {
-      // Rest of the action goes here
-    }
-  );
-  // try {
-  //   const updatedPost = await toBeSavedPost.save();
-  //   console.log(updatedPost);
-  //   res.status(201).json(updatedPost);
-  // } catch (error) {
-  //   res.status(409).json({ message: error.message });
-  // }
+    // console.log(updatedPost);
+    res.status(201).json(updatedPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
 };

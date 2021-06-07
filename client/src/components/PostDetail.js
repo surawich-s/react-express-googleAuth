@@ -12,6 +12,8 @@ import {
   Box,
   TextField,
   Button,
+  Grid,
+  Link,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -19,6 +21,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePost } from "../actions/";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +65,7 @@ const INITIAL_STATE = {
 function PostDetail({ post }, ref) {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.user.userInfo);
 
   const [comment, setComment] = useState(INITIAL_STATE);
@@ -110,12 +114,27 @@ function PostDetail({ post }, ref) {
         </CardActions>
         <CardContent className={classes.content}>
           <Typography variant="body1" color="textPrimary" component="p">
-            {post.userName}{" "}
+            <Link onClick={() => history.push(`/profile/${post.userId}`)}>
+              {post.userName}
+            </Link>{" "}
             <span style={{ textDecorationStyle: "none" }}>
               {post.postDescription}
             </span>
           </Typography>
-          <Typography variant="body1"></Typography>
+          <Grid container direction="column">
+            {post.comments.map((comment) => (
+              <Grid item key={comment._id}>
+                <Typography variant="body1" color="textPrimary" component="p">
+                  <Link
+                    onClick={() => history.push(`/profile/${comment.userId}`)}
+                  >
+                    {comment.userName}
+                  </Link>{" "}
+                  {comment.commentDetail}
+                </Typography>
+              </Grid>
+            ))}
+          </Grid>
         </CardContent>
         <CardContent>
           <form
