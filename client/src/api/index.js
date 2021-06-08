@@ -29,3 +29,6 @@ export const fetchPosts = () => axios.get(Url + "/posts");
 
 export const updatePost = (id, comment) =>
   axios.post(Url + `/posts/${id}`, comment);
+
+export const likePost = (id, like) =>
+  axios.post(Url + `/posts/${id}/like`, like);

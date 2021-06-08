@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useRef } from "react";
 import {
   Card,
   CardHeader,
@@ -10,18 +10,16 @@ import {
   IconButton,
   makeStyles,
   Box,
-  TextField,
-  Button,
   Grid,
   Link,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
-import { useDispatch, useSelector } from "react-redux";
-import { updatePost } from "../actions/";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import LikeButton from "./PostDetailComponents/LikeButton";
+import CommentForm from "./PostDetailComponents/CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,43 +40,17 @@ const useStyles = makeStyles((theme) => ({
   content: {
     paddingTop: 0,
   },
-  commentform: {
-    display: "flex",
-    flexDirection: "row",
-  },
-  field: {
-    display: "block",
-    border: "none",
-  },
-  noBorder: {
-    border: "none",
-  },
 }));
-
-const INITIAL_STATE = {
-  userId: "",
-  userName: "",
-  commentDetail: "",
-  createdAt: "",
-};
 
 function PostDetail({ post }, ref) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user.userInfo);
+  const inputRef = useRef();
 
-  const [comment, setComment] = useState(INITIAL_STATE);
-
-  const handleSubmit = (e) => {
+  const handleFocus = (e) => {
     e.preventDefault();
-    if (user) {
-      // post.comments.push(comment);
-      // console.log(post);
-      dispatch(updatePost(post._id, comment));
-      // post.comments.pop(comment);
-    }
-    setComment(INITIAL_STATE);
+    inputRef.current.focus();
   };
 
   return (
@@ -91,6 +63,7 @@ function PostDetail({ post }, ref) {
               aria-label="avatar"
               alt={post.userName}
               src={post.userAvatar}
+              onClick={() => history.push(`/profile/${post.userId}`)}
             ></Avatar>
           }
           action={
@@ -98,14 +71,16 @@ function PostDetail({ post }, ref) {
               <MoreHorizIcon />
             </IconButton>
           }
-          title={post.userName}
+          title={
+            <Typography onClick={() => history.push(`/profile/${post.userId}`)}>
+              {post.userName}
+            </Typography>
+          }
         />
         <CardMedia className={classes.media} image={post.postImage} />
         <CardActions className={classes.actionbar}>
-          <IconButton aria-label="like">
-            <FavoriteBorderIcon />
-          </IconButton>
-          <IconButton aria-label="comment">
+          <LikeButton user={user} postId={post._id} />
+          <IconButton aria-label="comment" onClick={handleFocus}>
             <ChatBubbleOutlineIcon />
           </IconButton>
           <IconButton aria-label="save" style={{ marginLeft: "auto" }}>
@@ -136,47 +111,7 @@ function PostDetail({ post }, ref) {
             ))}
           </Grid>
         </CardContent>
-        <CardContent>
-          <form
-            className={classes.commentform}
-            noValidate
-            autoComplete="off"
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              value={comment.commentDetail}
-              className={classes.field}
-              variant="outlined"
-              onChange={(e) =>
-                setComment((prevState) => ({
-                  ...prevState,
-                  commentDetail: e.target.value,
-                  userId: user._id,
-                  userName: user.name,
-                  createdAt: new Date(),
-                }))
-              }
-              multiline
-              rows={1}
-              fullWidth
-              placeholder="Add a comment..."
-              required
-              margin="none"
-              InputProps={{
-                classes: { notchedOutline: classes.noBorder },
-              }}
-            />
-            <CardActions>
-              <Button
-                style={{ marginLeft: "auto" }}
-                type="submit"
-                color="primary"
-              >
-                Post
-              </Button>
-            </CardActions>
-          </form>
-        </CardContent>
+        <CommentForm user={user} postId={post._id} inputRef={inputRef} />
       </Card>
     </Box>
   );

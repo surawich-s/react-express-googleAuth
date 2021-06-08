@@ -6,10 +6,12 @@ const postSchema = new mongoose.Schema({
   userAvatar: String,
   postImage: String,
   postDescription: String,
-  likeCount: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      userId: String,
+      userName: String,
+    },
+  ],
   comments: [
     {
       userId: String,

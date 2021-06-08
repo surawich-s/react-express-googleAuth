@@ -7,6 +7,7 @@ import {
   FETCH_USER_POSTS,
   FETCH_POSTS,
   CREATE_POST_COMMENT,
+  LIKE_POST,
 } from "../constants/actionTypes";
 
 // User actions
@@ -71,6 +72,15 @@ export const updatePost = (id, comment) => async (dispatch) => {
   try {
     const { data } = await api.updatePost(id, comment);
     dispatch({ type: CREATE_POST_COMMENT, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likePost = (id, like) => async (dispatch) => {
+  try {
+    const { data } = await api.likePost(id, like);
+    dispatch({ type: LIKE_POST, payload: data });
   } catch (error) {
     console.log(error);
   }
