@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -51,6 +51,12 @@ function Layout({ children }) {
       );
     }
   };
+
+  // const renderedContent = () => {
+  //   if (user._id) {
+  //     return { children };
+  //   }
+  // };
 
   return (
     <div className={classes.root}>

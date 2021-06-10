@@ -12,6 +12,7 @@ import {
   Box,
   Grid,
   Link,
+  CircularProgress,
 } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -20,6 +21,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import LikeButton from "./PostDetailComponents/LikeButton";
 import CommentForm from "./PostDetailComponents/CommentForm";
+import LikeDetail from "./PostDetailComponents/LikeDetail";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,90 +60,84 @@ function PostDetail({ post }, ref) {
     setPostData(changedPostData);
   };
 
-  return (
-    <Box style={{ display: "inline-block" }}>
-      <Card className={classes.root} ref={ref}>
-        <CardHeader
-          id="simple-modal-title"
-          avatar={
-            <Avatar
-              aria-label="avatar"
-              alt={post.userName}
-              src={post.userAvatar}
-              onClick={() => history.push(`/profile/${post.userId}`)}
-            ></Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreHorizIcon />
+  if (!user) {
+    return <CircularProgress />;
+  } else {
+    return (
+      <Box style={{ display: "inline-block" }}>
+        <Card className={classes.root} ref={ref}>
+          <CardHeader
+            id="simple-modal-title"
+            avatar={
+              <Avatar
+                aria-label="avatar"
+                alt={post.userName}
+                src={post.userAvatar}
+                onClick={() => history.push(`/profile/${post.userId}`)}
+              ></Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreHorizIcon />
+              </IconButton>
+            }
+            title={
+              <Typography
+                onClick={() => history.push(`/profile/${post.userId}`)}
+              >
+                {post.userName}
+              </Typography>
+            }
+          />
+          <CardMedia className={classes.media} image={post.postImage} />
+          <CardActions className={classes.actionbar}>
+            <LikeButton
+              user={user}
+              postData={postData}
+              handleChange={handleChange}
+            />
+            <IconButton aria-label="comment" onClick={handleFocus}>
+              <ChatBubbleOutlineIcon />
             </IconButton>
-          }
-          title={
-            <Typography onClick={() => history.push(`/profile/${post.userId}`)}>
-              {post.userName}
+            <IconButton aria-label="save" style={{ marginLeft: "auto" }}>
+              <BookmarkBorderIcon />
+            </IconButton>
+          </CardActions>
+          <CardContent className={classes.content}>
+            <LikeDetail postData={postData} />
+            <Typography variant="body1" color="textPrimary" component="p">
+              <Link onClick={() => history.push(`/profile/${post.userId}`)}>
+                {post.userName}
+              </Link>{" "}
+              <span style={{ textDecorationStyle: "none" }}>
+                {post.postDescription}
+              </span>
             </Typography>
-          }
-        />
-        <CardMedia className={classes.media} image={post.postImage} />
-        <CardActions className={classes.actionbar}>
-          <LikeButton
+            <Grid container direction="column">
+              {post.comments.map((comment) => (
+                <Grid item key={comment._id}>
+                  <Typography variant="body1" color="textPrimary" component="p">
+                    <Link
+                      onClick={() => history.push(`/profile/${comment.userId}`)}
+                    >
+                      {comment.userName}
+                    </Link>{" "}
+                    {comment.commentDetail}
+                  </Typography>
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+          <CommentForm
             user={user}
             postData={postData}
             handleChange={handleChange}
+            inputRef={inputRef}
           />
-          <IconButton aria-label="comment" onClick={handleFocus}>
-            <ChatBubbleOutlineIcon />
-          </IconButton>
-          <IconButton aria-label="save" style={{ marginLeft: "auto" }}>
-            <BookmarkBorderIcon />
-          </IconButton>
-        </CardActions>
-        <CardContent className={classes.content}>
-          <Typography variant="body1" color="textPrimary" component="p">
-            {/* <Avatar
-              aria-label="avatar"
-              alt={post.userName}
-              src={post.comments[comments.length - 1].userAvatar}
-              onClick={() => history.push(`/profile/${post.userId}`)}
-            ></Avatar> */}
-            {"Liked by "}
-            <Link onClick={() => history.push(`/profile/${post.userId}`)}>
-              {post.userName}
-            </Link>{" "}
-            {` and ${post.likes.length} others`}
-          </Typography>
-          <Typography variant="body1" color="textPrimary" component="p">
-            <Link onClick={() => history.push(`/profile/${post.userId}`)}>
-              {post.userName}
-            </Link>{" "}
-            <span style={{ textDecorationStyle: "none" }}>
-              {post.postDescription}
-            </span>
-          </Typography>
-          <Grid container direction="column">
-            {post.comments.map((comment) => (
-              <Grid item key={comment._id}>
-                <Typography variant="body1" color="textPrimary" component="p">
-                  <Link
-                    onClick={() => history.push(`/profile/${comment.userId}`)}
-                  >
-                    {comment.userName}
-                  </Link>{" "}
-                  {comment.commentDetail}
-                </Typography>
-              </Grid>
-            ))}
-          </Grid>
-        </CardContent>
-        <CommentForm
-          user={user}
-          postData={postData}
-          handleChange={handleChange}
-          inputRef={inputRef}
-        />
-      </Card>
-    </Box>
-  );
+        </Card>
+      </Box>
+    );
+  }
 }
 
 export default forwardRef(PostDetail);
