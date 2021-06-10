@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CommentForm({ user, postId, inputRef }) {
+function CommentForm({ user, postData, handleChange, inputRef }) {
   const [comment, setComment] = useState(INITIAL_STATE);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -38,7 +38,10 @@ function CommentForm({ user, postId, inputRef }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user) {
-      dispatch(updatePost(postId, comment));
+      postData.comments.push(comment);
+      console.log(postData);
+      handleChange(postData);
+      dispatch(updatePost(postData._id, postData));
     }
     setComment(INITIAL_STATE);
   };

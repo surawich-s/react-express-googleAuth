@@ -10,36 +10,37 @@ const INITIAL_STATE = {
   createdAt: "",
 };
 
-function LikeButton({ user, postId }) {
+function LikeButton({ user, postData, handleChange }) {
   const dispatch = useDispatch();
-  const [likeButtonColor, setLikeButtonColor] = useState("secondary");
-
-  const handleLikeButtonColor = () => {
-    if (likeButtonColor === "secondary") {
-      setLikeButtonColor("primary");
-    } else {
-      setLikeButtonColor("secondary");
-    }
-  };
+  const [liked, setLiked] = useState(false);
 
   const handleLikeDispatch = () => {
-    const likeData = {
-      userId: user._id,
-      userName: user.name,
-      createdAt: new Date(),
-    };
-    dispatch(likePost(postId, likeData));
+    if (liked) {
+      const likeData = {
+        userId: user._id,
+        userName: user.name,
+        createdAt: new Date(),
+      };
+      postData.likes.push(likeData);
+      console.log(postData);
+    }
+
+    // dispatch(likePost(postId, likeData));
   };
 
   const handleLike = (e) => {
     e.preventDefault();
+    setLiked(!liked);
     if (user._id) {
-      handleLikeButtonColor();
       handleLikeDispatch();
     }
   };
   return (
-    <IconButton aria-label="like" onClick={handleLike} color={likeButtonColor}>
+    <IconButton
+      aria-label="like"
+      onClick={handleLike}
+      color={liked ? "primary" : "secondary"}
+    >
       <FavoriteIcon />
     </IconButton>
   );

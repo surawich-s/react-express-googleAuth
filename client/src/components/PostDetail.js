@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -47,10 +47,15 @@ function PostDetail({ post }, ref) {
   const history = useHistory();
   const user = useSelector((state) => state.user.userInfo);
   const inputRef = useRef();
+  const [postData, setPostData] = useState(post);
 
   const handleFocus = (e) => {
     e.preventDefault();
     inputRef.current.focus();
+  };
+
+  const handleChange = (changedPostData) => {
+    setPostData(changedPostData);
   };
 
   return (
@@ -79,7 +84,11 @@ function PostDetail({ post }, ref) {
         />
         <CardMedia className={classes.media} image={post.postImage} />
         <CardActions className={classes.actionbar}>
-          <LikeButton user={user} postId={post._id} />
+          <LikeButton
+            user={user}
+            postData={postData}
+            handleChange={handleChange}
+          />
           <IconButton aria-label="comment" onClick={handleFocus}>
             <ChatBubbleOutlineIcon />
           </IconButton>
@@ -88,6 +97,19 @@ function PostDetail({ post }, ref) {
           </IconButton>
         </CardActions>
         <CardContent className={classes.content}>
+          <Typography variant="body1" color="textPrimary" component="p">
+            {/* <Avatar
+              aria-label="avatar"
+              alt={post.userName}
+              src={post.comments[comments.length - 1].userAvatar}
+              onClick={() => history.push(`/profile/${post.userId}`)}
+            ></Avatar> */}
+            {"Liked by "}
+            <Link onClick={() => history.push(`/profile/${post.userId}`)}>
+              {post.userName}
+            </Link>{" "}
+            {` and ${post.likes.length} others`}
+          </Typography>
           <Typography variant="body1" color="textPrimary" component="p">
             <Link onClick={() => history.push(`/profile/${post.userId}`)}>
               {post.userName}
@@ -111,7 +133,12 @@ function PostDetail({ post }, ref) {
             ))}
           </Grid>
         </CardContent>
-        <CommentForm user={user} postId={post._id} inputRef={inputRef} />
+        <CommentForm
+          user={user}
+          postData={postData}
+          handleChange={handleChange}
+          inputRef={inputRef}
+        />
       </Card>
     </Box>
   );
