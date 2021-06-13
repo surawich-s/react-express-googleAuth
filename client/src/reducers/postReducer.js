@@ -14,7 +14,6 @@ export default (state = [], action) => {
     case FETCH_POSTS:
       return action.payload;
     case UPDATE_POST:
-    case CREATE_POST_COMMENT:
       return state.map((post) =>
         post._id === action.payload._id ? action.payload : post
       );

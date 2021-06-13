@@ -78,7 +78,12 @@ function CommentForm({ user, postData, handleChange, inputRef }) {
           }}
         />
         <CardActions>
-          <Button style={{ marginLeft: "auto" }} type="submit" color="primary">
+          <Button
+            style={{ marginLeft: "auto" }}
+            type="submit"
+            color="primary"
+            disabled={comment.commentDetail.length > 0 ? false : true}
+          >
             Post
           </Button>
         </CardActions>

@@ -1,27 +1,23 @@
 import React, { forwardRef, useRef, useState } from "react";
 import {
   Card,
-  CardHeader,
   CardContent,
   CardActions,
   CardMedia,
-  Typography,
-  Avatar,
   IconButton,
   makeStyles,
   Box,
-  Grid,
-  Link,
   CircularProgress,
 } from "@material-ui/core";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import LikeButton from "./PostDetailComponents/LikeButton";
-import CommentForm from "./PostDetailComponents/CommentForm";
+import PostDetailHeader from "./PostDetailComponents/PostDetailHeader";
 import LikeDetail from "./PostDetailComponents/LikeDetail";
+import LikeButton from "./PostDetailComponents/LikeButton";
+import CommentList from "./PostDetailComponents/CommentList";
+import CommentForm from "./PostDetailComponents/CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,13 +42,13 @@ const useStyles = makeStyles((theme) => ({
 
 function PostDetail({ post }, ref) {
   const classes = useStyles();
-  const history = useHistory();
   const user = useSelector((state) => state.user.userInfo);
   const inputRef = useRef();
   const [postData, setPostData] = useState(post);
 
   const handleFocus = (e) => {
     e.preventDefault();
+    console.log(ref);
     inputRef.current.focus();
   };
 
@@ -66,29 +62,7 @@ function PostDetail({ post }, ref) {
     return (
       <Box style={{ display: "inline-block" }}>
         <Card className={classes.root} ref={ref}>
-          <CardHeader
-            id="simple-modal-title"
-            avatar={
-              <Avatar
-                aria-label="avatar"
-                alt={post.userName}
-                src={post.userAvatar}
-                onClick={() => history.push(`/profile/${post.userId}`)}
-              ></Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreHorizIcon />
-              </IconButton>
-            }
-            title={
-              <Typography
-                onClick={() => history.push(`/profile/${post.userId}`)}
-              >
-                {post.userName}
-              </Typography>
-            }
-          />
+          <PostDetailHeader post={post} />
           <CardMedia className={classes.media} image={post.postImage} />
           <CardActions className={classes.actionbar}>
             <LikeButton
@@ -105,28 +79,7 @@ function PostDetail({ post }, ref) {
           </CardActions>
           <CardContent className={classes.content}>
             <LikeDetail postData={postData} />
-            <Typography variant="body1" color="textPrimary" component="p">
-              <Link onClick={() => history.push(`/profile/${post.userId}`)}>
-                {post.userName}
-              </Link>{" "}
-              <span style={{ textDecorationStyle: "none" }}>
-                {post.postDescription}
-              </span>
-            </Typography>
-            <Grid container direction="column">
-              {post.comments.map((comment) => (
-                <Grid item key={comment._id}>
-                  <Typography variant="body1" color="textPrimary" component="p">
-                    <Link
-                      onClick={() => history.push(`/profile/${comment.userId}`)}
-                    >
-                      {comment.userName}
-                    </Link>{" "}
-                    {comment.commentDetail}
-                  </Typography>
-                </Grid>
-              ))}
-            </Grid>
+            <CommentList post={post} />
           </CardContent>
           <CommentForm
             user={user}

@@ -4,6 +4,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { purple } from "@material-ui/core/colors";
 import Posts from "./Pages/Posts";
 import Profile from "./Pages/Profile";
+import Post from "./Pages/Post";
 import Layout from "./Layout";
 
 const theme = createMuiTheme({
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route path="/profile/:id">
               <Profile />
+            </Route>
+            <Route path="/p/:id">
+              <Post />
             </Route>
           </Switch>
         </Layout>
