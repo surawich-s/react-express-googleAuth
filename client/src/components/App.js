@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import { purple } from "@material-ui/core/colors";
 import Posts from "./Pages/Posts";
 import Profile from "./Pages/Profile";
 import Post from "./Pages/Post";

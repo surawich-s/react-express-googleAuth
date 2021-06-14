@@ -12,7 +12,6 @@ import {
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import PostDetailHeader from "./PostDetailComponents/PostDetailHeader";
 import LikeDetail from "./PostDetailComponents/LikeDetail";
 import LikeButton from "./PostDetailComponents/LikeButton";
@@ -79,7 +78,7 @@ function PostDetail({ post }, ref) {
           </CardActions>
           <CardContent className={classes.content}>
             <LikeDetail postData={postData} />
-            <CommentList post={post} />
+            <CommentList post={post} user={user} />
           </CardContent>
           <CommentForm
             user={user}

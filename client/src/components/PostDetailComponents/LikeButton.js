@@ -51,6 +51,7 @@ function LikeButton({ user, postData, handleChange }) {
 
   useEffect(() => {
     dispatch(updatePost(postData._id, postData));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [liked]);
   return (
     <IconButton

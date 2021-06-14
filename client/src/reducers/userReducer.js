@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   userPosts: null,
 };
 
-export default (state = INITIAL_STATE, action) => {
+const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
       return { ...state, isSignedIn: true, userInfo: action.payload }; //immute changing object
@@ -26,3 +26,5 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+export default userReducer;

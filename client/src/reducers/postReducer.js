@@ -2,10 +2,9 @@ import {
   CREATE_POST,
   FETCH_POSTS,
   UPDATE_POST,
-  CREATE_POST_COMMENT,
 } from "../constants/actionTypes";
 
-export default (state = [], action) => {
+const postReducer = (state = [], action) => {
   switch (action.type) {
     case CREATE_POST:
       return [...state, action.payload];
@@ -21,3 +20,5 @@ export default (state = [], action) => {
       return state;
   }
 };
+
+export default postReducer;

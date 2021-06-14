@@ -44,20 +44,11 @@ function Profile() {
       // console.log(posts);
     }
     fetchUserAndPost();
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   if (!posts || !user) {
     return <LinearProgress />;
   }
-
-  // const handleOpen = () => {
-  //   console.log("Modal Open");
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   return (
     <div className={classes.root}>

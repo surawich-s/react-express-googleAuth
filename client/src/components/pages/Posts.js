@@ -18,7 +18,7 @@ function Posts(props) {
 
   useEffect(() => {
     dispatch(fetchPosts());
-  }, []);
+  }, [dispatch]);
 
   if (!posts) {
     return <CircularProgress />;
