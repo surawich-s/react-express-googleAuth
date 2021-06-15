@@ -7,7 +7,7 @@ import { updatePost } from "../../actions";
 function LikeButton({ user, postData, handleChange }) {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(
-    postData.likes.some((like) => like.userId === user._id)
+    postData.likes.some((like) => like.userId === user._id) || false
   );
 
   const handleLike = (e) => {

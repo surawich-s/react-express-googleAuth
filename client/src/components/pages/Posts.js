@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
 function Posts(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.post);
-
+  const posts = useSelector((state) => Object.values(state.post));
   useEffect(() => {
     dispatch(fetchPosts());
   }, [dispatch]);

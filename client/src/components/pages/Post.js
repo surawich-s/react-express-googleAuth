@@ -7,12 +7,10 @@ import { useParams } from "react-router-dom";
 function Post(props) {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const posts = useSelector((state) => state.post);
-  const post = posts.filter((post) => post._id === id);
+  const post = useSelector((state) => state.post[id]);
 
   useEffect(() => {
     dispatch(fetchPostById(id));
-    console.log(post);
   }, []);
   if (!post) {
     return <div>Loading...</div>;
