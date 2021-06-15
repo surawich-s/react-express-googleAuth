@@ -29,5 +29,4 @@ export const fetchPosts = () => axios.get(Url + "/posts");
 
 export const updatePost = (id, post) => axios.post(Url + `/posts/${id}`, post);
 
-export const likePost = (id, like) =>
-  axios.post(Url + `/posts/${id}/like`, like);
+export const fetchPostById = (id) => axios.get(Url + `/posts/p/${id}`);

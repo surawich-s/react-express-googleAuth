@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -55,7 +55,7 @@ function PostDetail({ post }, ref) {
     setPostData(changedPostData);
   };
 
-  if (!user) {
+  if (!user || !postData || !post) {
     return <CircularProgress />;
   } else {
     return (
@@ -78,7 +78,11 @@ function PostDetail({ post }, ref) {
           </CardActions>
           <CardContent className={classes.content}>
             <LikeDetail postData={postData} />
-            <CommentList post={post} user={user} />
+            <CommentList
+              postData={postData}
+              user={user}
+              handleChange={handleChange}
+            />
           </CardContent>
           <CommentForm
             user={user}

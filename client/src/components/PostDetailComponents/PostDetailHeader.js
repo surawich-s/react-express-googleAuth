@@ -1,6 +1,6 @@
 import React from "react";
 import { CardHeader, Avatar, IconButton, Typography } from "@material-ui/core";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import SettingButton from "./SettingButton";
 import { useHistory } from "react-router";
 
 function PostDetailHeader({ post }) {
@@ -18,7 +18,7 @@ function PostDetailHeader({ post }) {
       }
       action={
         <IconButton aria-label="settings">
-          <MoreHorizIcon />
+          <SettingButton postId={post._id} />
         </IconButton>
       }
       title={

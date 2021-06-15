@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
 import { Menu, MenuItem } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-function SettingButton(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+function SettingButton({ postId, index, handleRemove }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const history = useHistory();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -11,6 +13,10 @@ function SettingButton(props) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = () => {
+    handleRemove(index);
   };
 
   return (
@@ -23,7 +29,12 @@ function SettingButton(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        {postId ? (
+          <MenuItem onClick={() => history.push(`/p/${postId}`)}>
+            Go to Post
+          </MenuItem>
+        ) : null}
+        {index ? <MenuItem onClick={handleDelete}>Delete</MenuItem> : null}
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu>
     </>

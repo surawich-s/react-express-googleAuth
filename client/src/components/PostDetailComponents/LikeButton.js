@@ -10,23 +10,6 @@ function LikeButton({ user, postData, handleChange }) {
     postData.likes.some((like) => like.userId === user._id)
   );
 
-  // const handleLikeDispatch = () => {
-  //   if (liked) {
-  //     const likeData = {
-  //       userId: user._id,
-  //       userName: user.name,
-  //       createdAt: new Date(),
-  //     };
-  //     // postData.likes.push(likeData);
-  //     // dispatch(updatePost(postData._id, postData));
-  //     console.log("liked", liked);
-  //   } else {
-  //     console.log("unliked", liked);
-  //   }
-
-  //   // dispatch(likePost(postId, likeData));
-  // };
-
   const handleLike = (e) => {
     e.preventDefault();
     if (!liked) {

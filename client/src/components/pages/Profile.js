@@ -32,7 +32,7 @@ function Profile() {
   const classes = useStyles();
   const { user, posts } = useSelector((state) => ({
     user: state.user.fetchedUser,
-    posts: state.user.userPosts,
+    posts: state.post,
   }));
   const dispatch = useDispatch();
   const { id } = useParams();

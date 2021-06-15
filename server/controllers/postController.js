@@ -41,17 +41,18 @@ exports.updatePost = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+};
 
-  // try {
+exports.fetchPostById = async (req, res) => {
+  const { id } = req.params;
 
-  // const updatedPost = { creator, title, message, tags, selectedFile, _id: id };
-  // await PostMessage.findByIdAndUpdate(id, updatedPost, { new: true });
-
-  //   // console.log(updatedPost);
-  //   res.status(201).json(updatedPost);
-  // } catch (error) {
-  //   res.status(409).json({ message: error.message });
-  // }
+  try {
+    const fetchedPost = await Post.findById(id);
+    console.log(fetchedPost.postDescription);
+    res.status(201).json(fetchedPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
 };
 
 // exports.commentPost = async (req, res) => {

@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 
 function LikeDetail({ postData }) {
   const history = useHistory();
-  const numberLikes = postData.likes.length;
+  const numberLikes = postData.likes.length || 0;
 
   const renderedLike = () => {
     if (numberLikes < 1) {
