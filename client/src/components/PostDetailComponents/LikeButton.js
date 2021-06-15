@@ -20,14 +20,14 @@ function LikeButton({ user, postData, handleChange }) {
       };
       postData.likes.push(likeData);
       handleChange(postData);
-      console.log(postData.likes, liked);
+      // console.log(postData.likes, liked);
     } else {
       const newLikeData = postData.likes.filter(
         (like) => like.userId !== user._id
       );
       postData.likes = newLikeData;
       handleChange(postData);
-      console.log(postData.likes, liked);
+      // console.log(postData.likes, liked);
     }
     setLiked(!liked);
   };

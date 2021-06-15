@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -13,8 +14,7 @@ import GoogleAuth from "./GoogleAuth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
+    width: "100%",
   },
   appbar: {
     width: "100%",
@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#fefefe",
   },
   menuButton: {
-    marginLeft: theme.spacing(15),
-  },
-  title: {
     flexGrow: 1,
   },
   avatar: {
@@ -52,27 +49,27 @@ function Layout({ children }) {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.appbar} elevation={1}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="secondary"
-            aria-label="menu"
-            onClick={() => history.push("/")}
-          >
-            <InstagramIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title} color="secondary">
-            Instagram
-          </Typography>
-          {renderedSignIn()}
-          <GoogleAuth />
-        </Toolbar>
-      </AppBar>
-      {children}
-    </div>
+    <>
+      <Container className={classes.root}>
+        <AppBar position="static" className={classes.appbar} elevation={1}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="secondary"
+              aria-label="menu"
+              onClick={() => history.push("/")}
+            >
+              <InstagramIcon />
+              Instagram
+            </IconButton>
+            {renderedSignIn()}
+            <GoogleAuth />
+          </Toolbar>
+        </AppBar>
+        {children}
+      </Container>
+    </>
   );
 }
 

@@ -17,6 +17,10 @@ const INITIAL_STATE = {
 };
 
 const useStyles = makeStyles((theme) => ({
+  commentFormContainer: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
   commentform: {
     display: "flex",
     flexDirection: "row",
@@ -46,7 +50,7 @@ function CommentForm({ user, postData, handleChange, inputRef }) {
     setComment(INITIAL_STATE);
   };
   return (
-    <CardContent>
+    <CardContent className={classes.commentFormContainer}>
       <form
         className={classes.commentform}
         noValidate

@@ -1,13 +1,13 @@
-import React, { forwardRef, useRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import {
   Card,
   CardContent,
   CardActions,
-  CardMedia,
   IconButton,
   makeStyles,
-  Box,
-  CircularProgress,
+  Grid,
+  Container,
+  LinearProgress,
 } from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
@@ -20,18 +20,27 @@ import CommentForm from "./PostDetailComponents/CommentForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // display: "flex",
-    // flexDirection: "column",
-    width: 600,
-    // alignItems: "center",
-    // justifyContent: "center",
+    width: "80%",
+  },
+  rootmodal: {
+    width: "80%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   media: {
-    width: 600,
-    height: 600,
-    // paddingTop: "56.25%",
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
   },
   actionbar: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  likeModal: {
+    paddingTop: 0,
     paddingBottom: 0,
   },
   content: {
@@ -55,14 +64,68 @@ function PostDetail({ post }, ref) {
     setPostData(changedPostData);
   };
 
-  if (!user || !postData || !post) {
-    return <CircularProgress />;
-  } else {
-    return (
-      <Box style={{ display: "inline-block" }}>
+  const renderedPostDetail = () => {
+    if (ref) {
+      return (
+        <Card className={classes.rootmodal} ref={ref}>
+          <Grid container>
+            <Grid item md={6}>
+              <img className={classes.media} src={post.postImage} />
+            </Grid>
+
+            <Grid
+              item
+              md={6}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                maxWidth: "auto",
+              }}
+            >
+              <PostDetailHeader post={post} />
+              <CardContent
+                className={classes.content}
+                style={{ flexGrow: "1" }}
+              >
+                <CommentList
+                  postData={postData}
+                  user={user}
+                  handleChange={handleChange}
+                />
+              </CardContent>
+              <div style={{ marginBottom: "auto" }}>
+                <CardActions className={classes.actionbar}>
+                  <LikeButton
+                    user={user}
+                    postData={postData}
+                    handleChange={handleChange}
+                  />
+                  <IconButton aria-label="comment" onClick={handleFocus}>
+                    <ChatBubbleOutlineIcon />
+                  </IconButton>
+                  <IconButton aria-label="save" style={{ marginLeft: "auto" }}>
+                    <BookmarkBorderIcon />
+                  </IconButton>
+                </CardActions>
+                <CardContent className={classes.likeModal}>
+                  <LikeDetail postData={postData} />
+                </CardContent>
+                <CommentForm
+                  user={user}
+                  postData={postData}
+                  handleChange={handleChange}
+                  inputRef={inputRef}
+                />
+              </div>
+            </Grid>
+          </Grid>
+        </Card>
+      );
+    } else {
+      return (
         <Card className={classes.root} ref={ref}>
           <PostDetailHeader post={post} />
-          <CardMedia className={classes.media} image={post.postImage} />
+          <img className={classes.media} src={post.postImage} />
           <CardActions className={classes.actionbar}>
             <LikeButton
               user={user}
@@ -76,6 +139,7 @@ function PostDetail({ post }, ref) {
               <BookmarkBorderIcon />
             </IconButton>
           </CardActions>
+
           <CardContent className={classes.content}>
             <LikeDetail postData={postData} />
             <CommentList
@@ -91,7 +155,17 @@ function PostDetail({ post }, ref) {
             inputRef={inputRef}
           />
         </Card>
-      </Box>
+      );
+    }
+  };
+
+  if (!user || !postData || !post) {
+    return <LinearProgress />;
+  } else {
+    return (
+      <Container style={{ marginLeft: "auto", marginRight: "auto" }}>
+        {renderedPostDetail()}
+      </Container>
     );
   }
 }
