@@ -7,6 +7,15 @@ import Post from "./Pages/Post";
 import Layout from "./Layout";
 
 const theme = createMuiTheme({
+  overrides: {
+    MuiCardContent: {
+      root: {
+        "&:last-child": {
+          paddingBottom: 0,
+        },
+      },
+    },
+  },
   palette: {
     secondary: {
       main: "#000000",

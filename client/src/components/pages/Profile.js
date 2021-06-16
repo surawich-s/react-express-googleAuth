@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: "auto",
     height: "auto",
+    maxWidth: "180px",
+    maxHeight: "180px",
   },
 }));
 
@@ -57,25 +59,30 @@ function Profile() {
       <Container className={classes.root}>
         <Paper className={classes.paper} elevation={0}>
           <Grid container spacing={5}>
-            <Grid item xs={4} className={classes.avatar}>
+            <Grid
+              item
+              xs={5}
+              container
+              justify="flex-end"
+              className={classes.avatar}
+            >
               <Avatar
-                className={(classes.img, classes.large)}
+                className={classes.large}
                 alt={user.name}
                 src={user.picture}
               />
             </Grid>
-            <Grid item xs={8} sm>
-              <Typography gutterBottom variant="h5" color="textPrimary">
+            <Grid item xs={7}>
+              <Typography gutterBottom variant="h6" color="textPrimary">
                 {user.name}
               </Typography>
+              <Typography>This is Profile's Description</Typography>
             </Grid>
           </Grid>
-          <Typography>This is Profile's Description</Typography>
         </Paper>
         <PostForm id={id} userName={user.name} userAvatar={user.picture} />
-
-        <UserPosts posts={posts} id={id} />
       </Container>
+      <UserPosts posts={posts} id={id} />
     </>
   );
 }

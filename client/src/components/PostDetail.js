@@ -6,7 +6,6 @@ import {
   IconButton,
   makeStyles,
   Grid,
-  Container,
   LinearProgress,
 } from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -21,6 +20,7 @@ import CommentForm from "./PostDetailComponents/CommentForm";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "80%",
+    margin: "auto",
   },
   rootmodal: {
     width: "80%",
@@ -69,13 +69,14 @@ function PostDetail({ post }, ref) {
       return (
         <Card className={classes.rootmodal} ref={ref}>
           <Grid container>
-            <Grid item md={6}>
+            <Grid item md={8}>
               <img className={classes.media} src={post.postImage} />
             </Grid>
 
             <Grid
               item
-              md={6}
+              md={4}
+              sm={12}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -162,11 +163,7 @@ function PostDetail({ post }, ref) {
   if (!user || !postData || !post) {
     return <LinearProgress />;
   } else {
-    return (
-      <Container style={{ marginLeft: "auto", marginRight: "auto" }}>
-        {renderedPostDetail()}
-      </Container>
-    );
+    return <>{renderedPostDetail()}</>;
   }
 }
 

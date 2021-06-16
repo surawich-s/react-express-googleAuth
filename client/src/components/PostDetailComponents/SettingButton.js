@@ -16,6 +16,7 @@ function SettingButton({ postId, index, handleRemove }) {
   };
 
   const handleDelete = () => {
+    handleClose();
     handleRemove(index);
   };
 
