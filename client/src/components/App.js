@@ -4,6 +4,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import Posts from "./Pages/Posts";
 import Profile from "./Pages/Profile";
 import Post from "./Pages/Post";
+import EditProfile from "./Pages/EditProfile";
 import Layout from "./Layout";
 
 const theme = createMuiTheme({
@@ -39,8 +40,11 @@ function App() {
             <Route exact path="/">
               <Posts />
             </Route>
-            <Route path="/profile/:id">
+            <Route exact path="/profile/:id">
               <Profile />
+            </Route>
+            <Route path="/profile/:id/edit">
+              <EditProfile />
             </Route>
             <Route path="/p/:id">
               <Post />

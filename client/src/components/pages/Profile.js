@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import { Container, Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { Avatar, LinearProgress } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router";
+import { useParams, useHistory } from "react-router";
 import { fetchUser, fetchUserPosts } from "../../actions/";
 import PostForm from "../Forms/PostForm";
 import UserPosts from "../UserPosts";
@@ -40,6 +40,7 @@ function Profile() {
   }));
   const dispatch = useDispatch();
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     function fetchUserAndPost() {
@@ -75,7 +76,14 @@ function Profile() {
             <Grid item xs={7}>
               <Typography gutterBottom variant="h6" color="textPrimary">
                 {user.name}
+                <Button
+                  variant="outlined"
+                  onClick={() => history.push(`/profile/${id}/edit`)}
+                >
+                  Edit Profile
+                </Button>
               </Typography>
+
               <Typography>This is Profile's Description</Typography>
             </Grid>
           </Grid>

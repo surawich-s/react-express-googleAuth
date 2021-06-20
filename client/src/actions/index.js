@@ -40,7 +40,7 @@ export const fetchUser = (id) => async (dispatch) => {
   }
 };
 
-export const updatedUser = (id, userData) => async (dispatch) => {
+export const updateUser = (id, userData) => async (dispatch) => {
   try {
     const { data } = await api.updateUser(id, userData);
     dispatch({ type: UPDATE_USER_PROFILE, payload: data });
