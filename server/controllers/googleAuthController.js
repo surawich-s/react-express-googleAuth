@@ -11,20 +11,38 @@ exports.googleLogin = async (req, res) => {
   });
 
   const { name, email, picture } = ticket.getPayload();
-  const user = await User.findOneAndUpdate(
-    { email: email },
-    {
+  const count = await User.countDocuments(email);
+
+  if (count > 0) {
+    const user = await User.findOne({ email: email });
+    console.log(user);
+    console.log(name + " was logged in");
+
+    req.session.userId = user._id;
+    res.status(201);
+    res.json(user);
+  } else {
+    const user = await User.create({
+      email,
       name,
       picture,
-    },
-    { new: true, upsert: true }
-  );
+    });
+    console.log(name + " is logged in");
 
-  console.log(name + " is logged in");
+    req.session.userId = user.id;
+    res.status(201);
+    res.json(user);
+  }
 
-  req.session.userId = user.id;
-  res.status(201);
-  res.json(user);
+  // replace old user data with new google user data
+  // const user = await User.findOneAndUpdate(
+  //   { email: email },
+  //   {
+  //     name,
+  //     picture,
+  //   },
+  //   { new: true, upsert: true }
+  // );
 };
 
 exports.googleLogout = async (req, res) => {
@@ -37,9 +55,4 @@ exports.googleLogout = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-exports.getUserData = (req, res) => {
-  res.status(200);
-  res.json(req.user);
 };

@@ -29,13 +29,10 @@ function LikeButton({ user, postData, handleChange }) {
       handleChange(postData);
       // console.log(postData.likes, liked);
     }
+    dispatch(updatePost(postData._id, postData));
     setLiked(!liked);
   };
 
-  useEffect(() => {
-    dispatch(updatePost(postData._id, postData));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liked]);
   return (
     <IconButton
       aria-label="like"

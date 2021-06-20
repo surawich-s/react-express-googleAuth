@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Layout({ children }) {
   const classes = useStyles();
+
   const user = useSelector((state) => state.user);
   const history = useHistory();
 

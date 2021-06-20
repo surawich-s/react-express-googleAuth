@@ -18,6 +18,9 @@ export const googleAuthLogout = () => axios.delete(Url + "/logout");
 
 export const fetchUser = (id) => axios.get(Url + `/user/${id}`);
 
+export const updateUser = (id, userData) =>
+  axios.patch(Url + `/user/${id}`, userData);
+
 // posts
 
 export const createPost = (post) => axios.post(Url + "/posts/", post);
@@ -27,6 +30,6 @@ export const fetchUserPosts = (id) =>
 
 export const fetchPosts = () => axios.get(Url + "/posts");
 
-export const updatePost = (id, post) => axios.post(Url + `/posts/${id}`, post);
+export const updatePost = (id, post) => axios.patch(Url + `/posts/${id}`, post);
 
 export const fetchPostById = (id) => axios.get(Url + `/posts/p/${id}`);

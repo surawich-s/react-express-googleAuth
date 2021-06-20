@@ -8,6 +8,7 @@ import {
   FETCH_POSTS,
   UPDATE_POST,
   FETCH_POST_BY_ID,
+  UPDATE_USER_PROFILE,
 } from "../constants/actionTypes";
 
 // User actions
@@ -34,6 +35,15 @@ export const fetchUser = (id) => async (dispatch) => {
   try {
     const { data } = await api.fetchUser(id);
     dispatch({ type: FETCH_USER, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updatedUser = (id, userData) => async (dispatch) => {
+  try {
+    const { data } = await api.updateUser(id, userData);
+    dispatch({ type: UPDATE_USER_PROFILE, payload: data });
   } catch (error) {
     console.log(error);
   }

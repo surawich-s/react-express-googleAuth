@@ -1,4 +1,9 @@
-import { LOGIN, LOGOUT, FETCH_USER } from "../constants/actionTypes";
+import {
+  LOGIN,
+  LOGOUT,
+  FETCH_USER,
+  UPDATE_USER_PROFILE,
+} from "../constants/actionTypes";
 
 const INITIAL_STATE = {
   isSignedIn: false,
@@ -14,6 +19,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return { ...state, isSignedIn: false, userInfo: null };
     case FETCH_USER:
       return { ...state, fetchedUser: action.payload };
+    case UPDATE_USER_PROFILE:
+      return { ...state, userInfo: action.payload };
 
     default:
       return state;

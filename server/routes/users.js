@@ -6,5 +6,6 @@ const userController = require("../controllers/userController");
 router.post("/google", googleAuthController.googleLogin);
 router.delete("/logout", googleAuthController.googleLogout);
 router.get("/user/:id", userController.fetchUser);
+router.patch("/user/:id", userController.updateUser);
 
 module.exports = router;
