@@ -16,6 +16,20 @@ const theme = createMuiTheme({
         },
       },
     },
+    MuiOutlinedInput: {
+      multiline: {
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        paddingRight: "5px",
+        paddingLeft: "5px",
+      },
+      input: {
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        paddingRight: "5px",
+        paddingLeft: "5px",
+      },
+    },
   },
   palette: {
     secondary: {

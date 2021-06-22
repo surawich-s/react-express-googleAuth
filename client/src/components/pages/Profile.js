@@ -27,8 +27,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: "auto",
     height: "auto",
-    maxWidth: "180px",
-    maxHeight: "180px",
+    maxHeight: "96px",
   },
 }));
 
@@ -46,7 +45,6 @@ function Profile() {
     function fetchUserAndPost() {
       dispatch(fetchUser(id));
       dispatch(fetchUserPosts(id));
-      // console.log(posts);
     }
     fetchUserAndPost();
   }, [dispatch, id]);
