@@ -3,22 +3,24 @@ const Post = require("../models/post");
 exports.createPost = async (req, res) => {
   const post = req.body;
 
-  const newPost = new Post(post);
+  const newPost = new Post({ user: req.user._id, post });
 
-  try {
-    await newPost.save();
-    res.status(201).json(newPost);
-    console.log("Post created by " + newPost.userId);
-  } catch (error) {
-    res.status(409).json({ message: error.message });
-  }
+  console.log(newPost);
+
+  // try {
+  //   await newPost.save();
+  //   res.status(201).json(newPost);
+  //   console.log("Post created by " + newPost.userId);
+  // } catch (error) {
+  //   res.status(409).json({ message: error.message });
+  // }
   // res.send("POSTED");
 };
 
 exports.fetchUserPosts = async (req, res) => {
   const { id } = req.params;
 
-  const posts = await Post.find({ userId: id });
+  const posts = await Post.find({ user: id });
 
   res.status(201).json(posts);
 };
@@ -30,7 +32,6 @@ exports.fetchPosts = async (req, res) => {
 };
 
 exports.updatePost = async (req, res) => {
-  // similar to update
   const post = req.body;
   const { id } = req.params;
 

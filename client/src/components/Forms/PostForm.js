@@ -45,9 +45,9 @@ function PostForm({ id, userName, userAvatar }) {
   const classes = useStyles();
   const history = useHistory();
   const [postData, setPostData] = useState({
-    userId: id,
-    userName: userName,
-    userAvatar: userAvatar,
+    // userId: id,
+    // userName: userName,
+    // userAvatar: userAvatar,
     postImage: "",
     postDescription: "",
   });

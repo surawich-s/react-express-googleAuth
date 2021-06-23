@@ -12,8 +12,8 @@ exports.fetchUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const user = req.body._id === req.user._id ? req.body : null;
-  const { id } = req.params;
+  const user = req.body._id == req.user._id ? req.body : null;
+  const { id } = req.params.id == req.user._id ? req.params : null;
 
   try {
     const updatedUser = await Post.findByIdAndUpdate(id, user, { new: true });

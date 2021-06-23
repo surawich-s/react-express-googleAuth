@@ -18,9 +18,14 @@ import UploadBase64 from "../UploadBase64";
 const useStyles = makeStyles((theme) => ({
   form: {
     backgroundColor: theme.palette.background.paper,
-    // border: "2px solid #000",
     boxShadow: theme.shadows[3],
     padding: theme.spacing(2, 4, 3),
+  },
+  formContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingLeft: "15%",
   },
   formElement: {
     marginBottom: "20px",
@@ -31,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   formField: {
     paddingTop: 0,
     marginTop: 0,
+  },
+  submitButton: {
+    width: "20%",
   },
 }));
 
@@ -43,6 +51,7 @@ function ProfileForm({ userInfo, id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userData);
+    dispatch(updateUser(id, userData));
   };
 
   const handleOnDoneUpload = (uploadedFiles) => {
@@ -59,7 +68,12 @@ function ProfileForm({ userInfo, id }) {
       >
         Edit Profile
       </Typography> */}
-      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <form
+        className={classes.formContainer}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
         <Grid container className={classes.formElement}>
           <Grid
             container
@@ -140,14 +154,19 @@ function ProfileForm({ userInfo, id }) {
           </Grid>
         </Grid>
 
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          endIcon={<KeyboardArrowRightIcon />}
-        >
-          Submit
-        </Button>
+        <Grid container>
+          <Grid container xs={3}></Grid>
+          <Grid container xs={9}>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              className={classes.submitButton}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </form>
     </Container>
   );

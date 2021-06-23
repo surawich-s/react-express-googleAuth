@@ -6,7 +6,7 @@ function UploadBase64({ defaultPicture, handleDoneUpload }) {
 
   useEffect(() => {
     // console.log(files.base64);
-    console.log(files);
+    // console.log(files);
     handleDoneUpload(files.base64);
   }, [files]);
 
