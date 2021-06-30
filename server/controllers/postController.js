@@ -23,19 +23,22 @@ exports.createPost = async (req, res) => {
 exports.fetchUserPosts = async (req, res) => {
   const { id } = req.params;
 
-  const posts = await Post.find({ _user: id }).select(
-    "_id postImage commentsCount likesCount"
-  );
+  const posts = await Post.find({ _user: id })
+    .select("_id postImage commentsCount likesCount")
+    .populate({ path: "_user", select: "_id name picture" })
+    .populate({ path: "_comments", populate: [{ path: "_user" }] });
 
   res.status(201).json(posts);
 };
 
 exports.fetchPosts = async (req, res) => {
-  const posts = await Post.find().populate({
-    path: "_user",
-    select: "_id name picture",
-  });
-  // console.log(posts);
+  const posts = await Post.find()
+    .populate({
+      path: "_user",
+      select: "_id name picture",
+    })
+    .populate({ path: "_comments", populate: [{ path: "_user" }] });
+  // console.log(posts[0]._comments[0]);
   res.status(201).json(posts);
 };
 
@@ -56,10 +59,12 @@ exports.fetchPostById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const fetchedPost = await Post.findById(id).populate({
-      path: "_user",
-      select: "_id name picture",
-    });
+    const fetchedPost = await Post.findById(id)
+      .populate({
+        path: "_user",
+        select: "_id name picture",
+      })
+      .populate({ path: "_comments", populate: [{ path: "_user" }] });
     // console.log(fetchedPost.postDescription);
     res.status(201).json(fetchedPost);
   } catch (error) {
@@ -69,11 +74,50 @@ exports.fetchPostById = async (req, res) => {
 
 exports.createComment = async (req, res) => {
   const { id } = req.params;
-  const _user = req.user;
-  const commentDetail = req.body;
+  const _user = req.user._id;
+  const { commentDetail } = req.body;
+  const newCommentData = new Comment({ _user, commentDetail });
+
   try {
-    const newComment = await Comment.save({ _user, _post: id, commentDetail });
-    await res.status(201).json(newComment);
+    await newCommentData.save();
+    const commentedPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        $push: { _comments: newCommentData._id },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "_user",
+        select: "_id name picture",
+      })
+      .populate({ path: "_comments", populate: [{ path: "_user" }] });
+    res.status(201).json(commentedPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  const { id } = req.params;
+  const { commentId } = req.body;
+  // console.log(req.body);
+
+  try {
+    await Comment.findByIdAndDelete(commentId);
+    const deletedCommentPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        $pull: { _comments: commentId },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "_user",
+        select: "_id name picture",
+      })
+      .populate({ path: "_comments", populate: [{ path: "_user" }] });
+    res.status(201).json(deletedCommentPost);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -86,8 +130,8 @@ exports.fetchComments = async (req, res) => {
       path: "_user",
       select: "_id name picture",
     });
-    console.log(comments);
-    // res.status(201).json(comments)
+    // console.log(comments);
+    res.status(201).json(comments);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -95,57 +139,64 @@ exports.fetchComments = async (req, res) => {
 
 exports.likePost = async (req, res) => {
   const { id } = req.params;
-  const like = req.body;
+  const _user = req.user._id;
+  const like = { _user: _user, _post: id };
+  const newLike = new Like(like);
+
   try {
-    const likedPost = await Post.findByIdAndUpdate(id, {
-      $inc: { likesCount: 1 },
-    });
-    await Like.save(like);
+    const likedPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        $inc: { likesCount: 1 },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "_user",
+        select: "_id name picture",
+      })
+      .populate({ path: "_comments", populate: [{ path: "_user" }] });
+    await newLike.save();
+    // console.log(likedPost);
     res.status(201).json(likedPost);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
 };
 
-// exports.commentPost = async (req, res) => {
-//   const comment = req.body;
-//   const { id } = req.params;
-//   try {
-//     const updatedPost = await Post.findOneAndUpdate(
-//       { _id: id },
-//       { $push: { comments: comment } }
-//     );
+exports.unlikePost = async (req, res) => {
+  const { id } = req.params;
+  const _user = req.user._id;
 
-//     // console.log(updatedPost);
-//     res.status(201).json(updatedPost);
-//   } catch (error) {
-//     res.status(409).json({ message: error.message });
-//   }
-// };
+  try {
+    const unlikedPost = await Post.findByIdAndUpdate(
+      id,
+      {
+        $inc: { likesCount: -1 },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "_user",
+        select: "_id name picture",
+      })
+      .populate({ path: "_comments", populate: [{ path: "_user" }] });
+    await Like.findOneAndDelete({ _user, _post: id });
+    // console.log("unliked");
+    res.status(201).json(unlikedPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
 
-// exports.likePost = async (req, res) => {
-//   const likeData = req.body;
-//   const { id } = req.params;
-//   console.log(likeData);
-//   const check = await Post.findOne({
-//     _id: id,
-//     comments: { userId: likeData.userId },
-//   });
-//   // const newCheck = check.likes.map((like) =>
-//   //   like.userId === likeData.userId ? like.pop() : ""
-//   // );
-//   console.log(check);
-//   // console.log(Object.keys(check.likes).length); // ES6 length of OBJ
-//   // if(check){
-//   //   try{
-//   //     const likedPost = await Post.findOneAndUpdate({_id: id}, {$push: {likes: like}})
-//   //     res.status(201).json(likedPost);
-//   //   } catch(error) {
-//   //     res.status(409).json({message: error.message})
-//   //   }
-//   // } else {
-//   //   try{
-//   //     const unlikedPost = await Post.fineOneAndDelete
-//   //   }
-//   // }
-// };
+exports.getLike = async (req, res) => {
+  const { id } = req.params;
+  const _user = req.user._id;
+  try {
+    const checkLike = await Like.exists({ _post: id, _user });
+    // console.log(checkLike);
+    res.status(200).json(checkLike);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};

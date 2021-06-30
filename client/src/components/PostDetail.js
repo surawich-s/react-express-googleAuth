@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -56,16 +56,11 @@ function PostDetail({ post }, ref) {
   const user = useSelector((state) => state.user.userInfo);
   const inputRef = useRef();
   const history = useHistory();
-  const [postData, setPostData] = useState(post);
 
   const handleFocus = (e) => {
     e.preventDefault();
     console.log(ref);
     inputRef.current.focus();
-  };
-
-  const handleChange = (changedPostData) => {
-    setPostData(changedPostData);
   };
 
   const renderedPostDetail = () => {
@@ -102,7 +97,11 @@ function PostDetail({ post }, ref) {
                     {post.postDescription}
                   </span>
                 </Typography>
-                <CommentList postId={post._id} userId={user._id} />
+                <CommentList
+                  comments={post._comments}
+                  postId={post._id}
+                  userId={user._id}
+                />
               </CardContent>
               <div style={{ marginBottom: "auto" }}>
                 <CardActions className={classes.actionbar}>
@@ -152,7 +151,11 @@ function PostDetail({ post }, ref) {
                 {post.postDescription}
               </span>
             </Typography>
-            <CommentList postId={post._id} userId={user._id} />
+            <CommentList
+              comments={post._comments}
+              postId={post._id}
+              userId={user._id}
+            />
           </CardContent>
           <CommentForm
             userId={user._id}
@@ -164,7 +167,7 @@ function PostDetail({ post }, ref) {
     }
   };
 
-  if (!user || !postData || !post) {
+  if (!user || !post) {
     return <LinearProgress />;
   } else {
     return <>{renderedPostDetail()}</>;

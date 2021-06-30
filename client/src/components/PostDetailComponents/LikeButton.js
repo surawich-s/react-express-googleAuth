@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { IconButton } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { updatePost } from "../../actions";
+import { likePost, unlikePost } from "../../actions";
+import { getLike } from "../../api";
 
-function LikeButton({ userId, postId }) {
+function LikeButton({ postId }) {
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
-  const likeData = { _post: postId, _user: userId };
 
   const handleLike = (e) => {
     e.preventDefault();
+    if (liked) {
+      dispatch(unlikePost(postId));
+      setLiked(false);
+    } else {
+      dispatch(likePost(postId));
+    }
   };
+
+  useEffect(() => {
+    getLike(postId).then((response) => {
+      setLiked(response.data);
+    });
+  });
 
   return (
     <IconButton

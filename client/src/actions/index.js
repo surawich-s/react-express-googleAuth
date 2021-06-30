@@ -11,6 +11,9 @@ import {
   UPDATE_USER_PROFILE,
   CREATE_COMMENT,
   FETCH_POST_COMMENTS,
+  LIKE_POST,
+  UNLIKE_POST,
+  DELETE_COMMENT,
 } from "../constants/actionTypes";
 
 // User actions
@@ -101,7 +104,6 @@ export const fetchPostById = (id) => async (dispatch) => {
 export const commentPost = (postId, comment) => async (dispatch) => {
   try {
     const { data } = await api.createComment(postId, comment);
-    console.log(data);
     dispatch({ type: CREATE_COMMENT, payload: data });
   } catch (error) {
     console.log(error);
@@ -111,8 +113,35 @@ export const commentPost = (postId, comment) => async (dispatch) => {
 export const fetchComments = (postId) => async (dispatch) => {
   try {
     const { data } = await api.fetchComment(postId);
-    console.log(data);
     dispatch({ type: FETCH_POST_COMMENTS, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const removeComment = (postId, commentId) => async (dispatch) => {
+  try {
+    const { data } = await api.deleteComment(postId, commentId);
+    // console.log(data);
+    dispatch({ type: DELETE_COMMENT, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likePost = (postId) => async (dispatch) => {
+  try {
+    const { data } = await api.likePost(postId);
+    dispatch({ type: LIKE_POST, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unlikePost = (postId) => async (dispatch) => {
+  try {
+    const { data } = await api.unlikePost(postId);
+    dispatch({ type: UNLIKE_POST, payload: data });
   } catch (error) {
     console.log(error);
   }

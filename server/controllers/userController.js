@@ -12,11 +12,15 @@ exports.fetchUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-  const user = req.body._id == req.user._id ? req.body : null;
-  const { id } = req.params.id == req.user._id ? req.params : null;
+  const { picture, name, profileDescription } = req.body;
+  const { id } = req.params;
 
   try {
-    const updatedUser = await Post.findByIdAndUpdate(id, user, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { picture, name, profileDescription },
+      { new: true }
+    );
     res.status(201).json(updatedUser);
   } catch (error) {
     res.status(409).json({ message: error.message });

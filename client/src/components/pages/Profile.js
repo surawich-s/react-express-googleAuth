@@ -82,7 +82,7 @@ function Profile() {
                 </Button>
               </Typography>
 
-              <Typography>This is Profile's Description</Typography>
+              <Typography>{user.profileDescription}</Typography>
             </Grid>
           </Grid>
         </Paper>

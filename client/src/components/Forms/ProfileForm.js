@@ -97,26 +97,6 @@ function ProfileForm({ userInfo, id }) {
             xs={3}
             className={classes.formLabel}
           >
-            <Typography>Username</Typography>
-          </Grid>
-          <Grid container xs={9} className={classes.formField}>
-            <TextField
-              style={{ paddingTop: "0" }}
-              value={userData.userName ? userData.userName : ""}
-              onChange={(e) =>
-                setUserData({ ...userData, userName: e.target.value })
-              }
-              variant="outlined"
-            />
-          </Grid>
-        </Grid>
-        <Grid container className={classes.formElement}>
-          <Grid
-            container
-            justify="flex-end"
-            xs={3}
-            className={classes.formLabel}
-          >
             <Typography>Name</Typography>
           </Grid>
           <Grid container xs={9} className={classes.formField}>

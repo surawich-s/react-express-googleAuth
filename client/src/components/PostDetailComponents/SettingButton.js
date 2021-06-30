@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { Menu, MenuItem } from "@material-ui/core";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-function SettingButton({ postId, index, handleRemove }) {
+function SettingButton({ postId, ownId, userId, commentUserId, handleRemove }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const history = useHistory();
 
@@ -17,7 +17,7 @@ function SettingButton({ postId, index, handleRemove }) {
 
   const handleDelete = () => {
     handleClose();
-    handleRemove(index);
+    handleRemove(ownId);
   };
 
   return (
@@ -35,7 +35,9 @@ function SettingButton({ postId, index, handleRemove }) {
             Go to Post
           </MenuItem>
         ) : null}
-        {index ? <MenuItem onClick={handleDelete}>Delete</MenuItem> : null}
+        {commentUserId === userId && (
+          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        )}
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu>
     </>

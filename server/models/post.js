@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
   postImage: String,
   postDescription: String,
   likesCount: { type: Number, default: 0 },
-  commentsCount: { type: Number, default: 0 },
+  _comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   createdAt: {
     type: Date,
     default: new Date(),

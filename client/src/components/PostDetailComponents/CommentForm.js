@@ -6,7 +6,6 @@ import {
   TextField,
   Button,
   makeStyles,
-  useRadioGroup,
 } from "@material-ui/core";
 import { commentPost } from "../../actions/";
 
@@ -36,7 +35,8 @@ function CommentForm({ userId, postId, inputRef }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userId) {
-      dispatch(commentPost(postId, comment));
+      const commentData = { commentDetail: comment };
+      dispatch(commentPost(postId, commentData));
       setComment("");
     }
   };
@@ -49,7 +49,7 @@ function CommentForm({ userId, postId, inputRef }) {
         onSubmit={handleSubmit}
       >
         <TextField
-          value={comment.commentDetail}
+          value={comment}
           className={classes.field}
           variant="outlined"
           onChange={(e) => setComment(e.target.value)}
@@ -69,7 +69,7 @@ function CommentForm({ userId, postId, inputRef }) {
             style={{ marginLeft: "auto" }}
             type="submit"
             color="primary"
-            disabled={comment > 0 ? false : true}
+            disabled={comment.length > 0 ? false : true}
           >
             Post
           </Button>
