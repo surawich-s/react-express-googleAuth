@@ -1,32 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, Typography, Link } from "@material-ui/core";
 import { useHistory } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SettingButton from "./SettingButton";
-import { updatePost } from "../../actions";
+import { fetchComments } from "../../actions";
 
-function CommentList({ postData, user, handleChange }) {
+function CommentList({ postId, userId }) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const comments = useSelector((state) => Object.values(state.comment));
 
   const handleRemove = (index) => {
-    postData.comments.splice(index, 1);
-    handleChange(postData);
-    dispatch(updatePost(postData._id, postData));
+    // postData.comments.splice(index, 1);
+    // dispatch(updatePost(postData._id, postData));
+    // dispatch deleteComment
   };
+
+  useEffect(() => {
+    dispatch(fetchComments(postId));
+  }, []);
 
   return (
     <>
-      <Typography variant="body1" color="textPrimary" component="p">
-        <Link onClick={() => history.push(`/profile/${postData.userId}`)}>
-          {postData.userName}
-        </Link>{" "}
-        <span style={{ textDecorationStyle: "none" }}>
-          {postData.postDescription}
-        </span>
-      </Typography>
       <Grid container direction="column">
-        {postData.comments.map((comment, index) => (
+        {comments.map((comment, index) => (
           <Grid
             item
             key={comment._id}
@@ -37,12 +34,14 @@ function CommentList({ postData, user, handleChange }) {
             }}
           >
             <Typography variant="body1" color="textPrimary" component="p">
-              <Link onClick={() => history.push(`/profile/${comment.userId}`)}>
-                {comment.userName}
+              <Link
+                onClick={() => history.push(`/profile/${comment._user._id}`)}
+              >
+                {comment._user.name}
               </Link>{" "}
               {comment.commentDetail}
             </Typography>
-            {user._id === comment.userId ? (
+            {userId === comment._user._id ? (
               <SettingButton
                 index={index}
                 handleRemove={handleRemove}

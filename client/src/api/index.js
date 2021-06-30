@@ -33,3 +33,8 @@ export const fetchPosts = () => axios.get(Url + "/posts");
 export const updatePost = (id, post) => axios.patch(Url + `/posts/${id}`, post);
 
 export const fetchPostById = (id) => axios.get(Url + `/posts/p/${id}`);
+
+export const createComment = (id, comment) =>
+  axios.post(Url + `/posts/p/${id}/comment`, comment);
+
+export const fetchComment = (id) => axios.get(Url + `/posts/p/${id}/comment`);

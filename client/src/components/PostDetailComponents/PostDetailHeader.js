@@ -11,9 +11,9 @@ function PostDetailHeader({ post }) {
       avatar={
         <Avatar
           aria-label="avatar"
-          alt={post.userName}
-          src={post.userAvatar}
-          onClick={() => history.push(`/profile/${post.userId}`)}
+          alt={post._user.name}
+          src={post._user.picture}
+          onClick={() => history.push(`/profile/${post._user._id}`)}
         ></Avatar>
       }
       action={
@@ -22,8 +22,8 @@ function PostDetailHeader({ post }) {
         </IconButton>
       }
       title={
-        <Typography onClick={() => history.push(`/profile/${post.userId}`)}>
-          {post.userName}
+        <Typography onClick={() => history.push(`/profile/${post._user._id}`)}>
+          {post._user.name}
         </Typography>
       }
     />

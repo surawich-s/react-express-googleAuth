@@ -15,7 +15,7 @@ exports.googleLogin = async (req, res) => {
 
   if (count > 0) {
     const user = await User.findOne({ email: email });
-    console.log(user);
+    // console.log(user);
     console.log(name + " was logged in");
 
     req.session.userId = user._id;

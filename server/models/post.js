@@ -1,24 +1,14 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  user: {
+  _user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
   postImage: String,
   postDescription: String,
-  likes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Like",
-    },
-  ],
-  comments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
+  likesCount: { type: Number, default: 0 },
+  commentsCount: { type: Number, default: 0 },
   createdAt: {
     type: Date,
     default: new Date(),

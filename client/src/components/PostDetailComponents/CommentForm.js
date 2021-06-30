@@ -6,15 +6,9 @@ import {
   TextField,
   Button,
   makeStyles,
+  useRadioGroup,
 } from "@material-ui/core";
-import { updatePost } from "../../actions/";
-
-const INITIAL_STATE = {
-  userId: "",
-  userName: "",
-  commentDetail: "",
-  createdAt: "",
-};
+import { commentPost } from "../../actions/";
 
 const useStyles = makeStyles((theme) => ({
   commentFormContainer: {
@@ -34,20 +28,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CommentForm({ user, postData, handleChange, inputRef }) {
-  const [comment, setComment] = useState(INITIAL_STATE);
+function CommentForm({ userId, postId, inputRef }) {
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (user) {
-      postData.comments.push(comment);
-      console.log(postData);
-      handleChange(postData);
-      dispatch(updatePost(postData._id, postData));
+    if (userId) {
+      dispatch(commentPost(postId, comment));
+      setComment("");
     }
-    setComment(INITIAL_STATE);
   };
   return (
     <CardContent className={classes.commentFormContainer}>
@@ -61,15 +52,7 @@ function CommentForm({ user, postData, handleChange, inputRef }) {
           value={comment.commentDetail}
           className={classes.field}
           variant="outlined"
-          onChange={(e) =>
-            setComment((prevState) => ({
-              ...prevState,
-              commentDetail: e.target.value,
-              userId: user._id,
-              userName: user.name,
-              createdAt: new Date(),
-            }))
-          }
+          onChange={(e) => setComment(e.target.value)}
           inputRef={inputRef}
           multiline
           rows={1}
@@ -86,7 +69,7 @@ function CommentForm({ user, postData, handleChange, inputRef }) {
             style={{ marginLeft: "auto" }}
             type="submit"
             color="primary"
-            disabled={comment.commentDetail.length > 0 ? false : true}
+            disabled={comment > 0 ? false : true}
           >
             Post
           </Button>

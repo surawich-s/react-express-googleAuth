@@ -9,6 +9,8 @@ import {
   UPDATE_POST,
   FETCH_POST_BY_ID,
   UPDATE_USER_PROFILE,
+  CREATE_COMMENT,
+  FETCH_POST_COMMENTS,
 } from "../constants/actionTypes";
 
 // User actions
@@ -91,6 +93,26 @@ export const fetchPostById = (id) => async (dispatch) => {
   try {
     const { data } = await api.fetchPostById(id);
     dispatch({ type: FETCH_POST_BY_ID, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const commentPost = (postId, comment) => async (dispatch) => {
+  try {
+    const { data } = await api.createComment(postId, comment);
+    console.log(data);
+    dispatch({ type: CREATE_COMMENT, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchComments = (postId) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchComment(postId);
+    console.log(data);
+    dispatch({ type: FETCH_POST_COMMENTS, payload: data });
   } catch (error) {
     console.log(error);
   }

@@ -7,10 +7,13 @@ import {
   makeStyles,
   Grid,
   LinearProgress,
+  Typography,
+  Link,
 } from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import PostDetailHeader from "./PostDetailComponents/PostDetailHeader";
 import LikeDetail from "./PostDetailComponents/LikeDetail";
 import LikeButton from "./PostDetailComponents/LikeButton";
@@ -52,6 +55,7 @@ function PostDetail({ post }, ref) {
   const classes = useStyles();
   const user = useSelector((state) => state.user.userInfo);
   const inputRef = useRef();
+  const history = useHistory();
   const [postData, setPostData] = useState(post);
 
   const handleFocus = (e) => {
@@ -88,19 +92,21 @@ function PostDetail({ post }, ref) {
                 className={classes.content}
                 style={{ flexGrow: "1" }}
               >
-                <CommentList
-                  postData={postData}
-                  user={user}
-                  handleChange={handleChange}
-                />
+                <Typography variant="body1" color="textPrimary" component="p">
+                  <Link
+                    onClick={() => history.push(`/profile/${post._user._id}`)}
+                  >
+                    {post._user.name}
+                  </Link>{" "}
+                  <span style={{ textDecorationStyle: "none" }}>
+                    {post.postDescription}
+                  </span>
+                </Typography>
+                <CommentList postId={post._id} userId={user._id} />
               </CardContent>
               <div style={{ marginBottom: "auto" }}>
                 <CardActions className={classes.actionbar}>
-                  <LikeButton
-                    user={user}
-                    postData={postData}
-                    handleChange={handleChange}
-                  />
+                  <LikeButton userId={user._id} postId={post._id} />
                   <IconButton aria-label="comment" onClick={handleFocus}>
                     <ChatBubbleOutlineIcon />
                   </IconButton>
@@ -109,12 +115,11 @@ function PostDetail({ post }, ref) {
                   </IconButton>
                 </CardActions>
                 <CardContent className={classes.likeModal}>
-                  <LikeDetail postData={postData} />
+                  <LikeDetail likesCount={post.likesCount} />
                 </CardContent>
                 <CommentForm
-                  user={user}
-                  postData={postData}
-                  handleChange={handleChange}
+                  userId={user._id}
+                  postId={post._id}
                   inputRef={inputRef}
                 />
               </div>
@@ -128,11 +133,7 @@ function PostDetail({ post }, ref) {
           <PostDetailHeader post={post} />
           <img className={classes.media} src={post.postImage} />
           <CardActions className={classes.actionbar}>
-            <LikeButton
-              user={user}
-              postData={postData}
-              handleChange={handleChange}
-            />
+            <LikeButton userId={user._id} postId={post._id} />
             <IconButton aria-label="comment" onClick={handleFocus}>
               <ChatBubbleOutlineIcon />
             </IconButton>
@@ -142,17 +143,20 @@ function PostDetail({ post }, ref) {
           </CardActions>
 
           <CardContent className={classes.content}>
-            <LikeDetail postData={postData} />
-            <CommentList
-              postData={postData}
-              user={user}
-              handleChange={handleChange}
-            />
+            <LikeDetail likesCount={post.likesCount} />
+            <Typography variant="body1" color="textPrimary" component="p">
+              <Link onClick={() => history.push(`/profile/${post._user._id}`)}>
+                {post._user.name}
+              </Link>{" "}
+              <span style={{ textDecorationStyle: "none" }}>
+                {post.postDescription}
+              </span>
+            </Typography>
+            <CommentList postId={post._id} userId={user._id} />
           </CardContent>
           <CommentForm
-            user={user}
-            postData={postData}
-            handleChange={handleChange}
+            userId={user._id}
+            postId={post._id}
             inputRef={inputRef}
           />
         </Card>
