@@ -26,8 +26,3 @@ exports.updateUser = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
-
-exports.getUserData = (req, res) => {
-  res.status(200);
-  res.json(req.user);
-};

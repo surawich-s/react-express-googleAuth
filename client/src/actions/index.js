@@ -69,6 +69,7 @@ export const fetchUserPosts = (id) => async (dispatch) => {
   try {
     const { data } = await api.fetchUserPosts(id);
     dispatch({ type: FETCH_USER_POSTS, payload: data });
+    console.log(data);
   } catch (error) {
     console.log(error);
   }

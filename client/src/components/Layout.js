@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container } from "@material-ui/core";
+import { Container, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import GoogleAuth from "./GoogleAuth";
+import { getReqUser } from "../api/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
 }));
+
+const reqUser = async () => {
+  await getReqUser().then((response) => console.log(response.data));
+};
 
 function Layout({ children }) {
   const classes = useStyles();
@@ -64,6 +69,7 @@ function Layout({ children }) {
               <InstagramIcon />
               Instagram
             </IconButton>
+            <Button onClick={reqUser}>Get UserData</Button>
             {renderedSignIn()}
             <GoogleAuth />
           </Toolbar>

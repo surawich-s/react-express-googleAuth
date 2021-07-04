@@ -10,11 +10,13 @@ exports.createPost = async (req, res) => {
 
   // console.log(newPost);
 
+  console.log(req.user._id);
+
   try {
     await newPost.save();
     await User.findByIdAndUpdate(req.user._id, { $inc: { postCount: 1 } });
     res.status(201).json(newPost);
-    console.log("Post created by " + newPost._user);
+    console.log("Post created");
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -24,7 +26,6 @@ exports.fetchUserPosts = async (req, res) => {
   const { id } = req.params;
 
   const posts = await Post.find({ _user: id })
-    .select("_id postImage commentsCount likesCount")
     .populate({ path: "_user", select: "_id name picture" })
     .populate({ path: "_comments", populate: [{ path: "_user" }] });
 

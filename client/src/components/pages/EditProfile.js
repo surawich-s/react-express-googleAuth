@@ -7,6 +7,7 @@ import ProfileForm from "../Forms/ProfileForm";
 function EditProfile(props) {
   const userInfo = useSelector((state) => state.user.userInfo);
   const { id } = useParams();
+  console.log(userInfo);
   if (!userInfo) {
     return <LinearProgress />;
   }

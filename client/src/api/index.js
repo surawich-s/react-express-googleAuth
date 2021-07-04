@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const Url = "http://localhost:5000/api/v1";
+axios.defaults.withCredentials = true;
 
-// users
+// google login
 
 export const googleAuthLogin = (data) =>
   axios.post(
@@ -16,10 +17,14 @@ export const googleAuthLogin = (data) =>
   );
 export const googleAuthLogout = () => axios.delete(Url + "/logout");
 
+// users
+
 export const fetchUser = (id) => axios.get(Url + `/user/${id}`);
 
 export const updateUser = (id, userData) =>
   axios.patch(Url + `/user/${id}`, userData);
+
+export const getReqUser = () => axios.get(Url);
 
 // posts
 

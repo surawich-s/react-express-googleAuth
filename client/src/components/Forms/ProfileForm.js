@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import FileBase from "react-file-base64";
+import React, { useState } from "react";
 import {
   Typography,
   Button,
@@ -8,8 +7,8 @@ import {
   makeStyles,
   Avatar,
   Grid,
+  LinearProgress,
 } from "@material-ui/core";
-import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { updateUser } from "../../actions/";
@@ -44,19 +43,26 @@ const useStyles = makeStyles((theme) => ({
 
 function ProfileForm({ userInfo, id }) {
   const [userData, setUserData] = useState(userInfo);
+  const [profilePicture, setProfilePicture] = useState(userInfo.picture);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
+    // console.log(userData);
     dispatch(updateUser(id, userData));
   };
 
   const handleOnDoneUpload = (uploadedFiles) => {
     setUserData({ ...userData, picture: uploadedFiles });
   };
+
+  if (!userData) {
+    return <LinearProgress />;
+  }
+
+  console.log(profilePicture);
 
   return (
     <Container className={classes.form}>
@@ -81,7 +87,7 @@ function ProfileForm({ userInfo, id }) {
             justify="flex-end"
             className={classes.formLabel}
           >
-            <Avatar src={userData.picture} />
+            <Avatar alt={userData.name} src={profilePicture} />
           </Grid>
           <Grid container xs={9} className={classes.formField}>
             <UploadBase64

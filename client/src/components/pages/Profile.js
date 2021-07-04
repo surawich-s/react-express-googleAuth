@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Button } from "@material-ui/core";
+import { Container, Button, ThemeProvider } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -19,22 +19,26 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     maxWidth: "100%",
   },
-  avatar: {
+  avatarContainer: {
     marginLeft: "auto",
     marginRight: "auto",
   },
 
-  large: {
-    width: "auto",
-    height: "auto",
-    maxHeight: "96px",
+  avatar: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+  },
+
+  profileButton: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
 function Profile() {
   const classes = useStyles();
-  const { user, posts } = useSelector((state) => ({
+  const { user, userLogin, posts } = useSelector((state) => ({
     user: state.user.fetchedUser,
+    userLogin: state.user.userInfo,
     posts: Object.values(state.post),
   }));
   const dispatch = useDispatch();
@@ -49,7 +53,7 @@ function Profile() {
     fetchUserAndPost();
   }, [dispatch, id]);
 
-  if (!posts || !user) {
+  if (!posts || !user || !userLogin) {
     return <LinearProgress />;
   }
 
@@ -63,10 +67,10 @@ function Profile() {
               xs={5}
               container
               justify="flex-end"
-              className={classes.avatar}
+              className={classes.avatarContainer}
             >
               <Avatar
-                className={classes.large}
+                className={classes.avatar}
                 alt={user.name}
                 src={user.picture}
               />
@@ -74,21 +78,35 @@ function Profile() {
             <Grid item xs={7}>
               <Typography gutterBottom variant="h6" color="textPrimary">
                 {user.name}
-                <Button
-                  variant="outlined"
-                  onClick={() => history.push(`/profile/${id}/edit`)}
-                >
-                  Edit Profile
-                </Button>
+
+                {user._id === userLogin._id ? (
+                  <Button
+                    variant="outlined"
+                    className={classes.profileButton}
+                    onClick={() => history.push(`/profile/${id}/edit`)}
+                  >
+                    Edit Profile
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.profileButton}
+                  >
+                    Follow
+                  </Button>
+                )}
               </Typography>
 
               <Typography>{user.profileDescription}</Typography>
             </Grid>
           </Grid>
         </Paper>
-        <PostForm id={id} userName={user.name} userAvatar={user.picture} />
+        {user._id === userLogin._id && (
+          <PostForm id={id} userName={user.name} userAvatar={user.picture} />
+        )}
       </Container>
-      <UserPosts posts={posts} id={id} />
+      <UserPosts posts={posts} />
     </>
   );
 }
