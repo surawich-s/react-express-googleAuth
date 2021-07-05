@@ -1,7 +1,6 @@
 const User = require("../models/user");
 
 exports.getUser = (req, res) => {
-  console.log("user sent");
   res.status(200).json(req.user);
 };
 

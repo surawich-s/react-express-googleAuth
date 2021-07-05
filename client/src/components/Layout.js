@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Button } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import GoogleAuth from "./GoogleAuth";
 import { getReqUser, googleAuthLogin } from "../api/";
-import { googleLogin } from "../actions";
+import { googleLogin, googleLogout } from "../actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,18 +35,22 @@ const useStyles = makeStyles((theme) => ({
 function Layout({ children }) {
   const classes = useStyles();
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    dispatch(googleLogin());
+  }, []);
+
   const renderedSignIn = () => {
-    if (user.isSignedIn) {
+    if (user) {
       return (
         <Avatar
-          alt={user.userInfo.name}
-          src={user.userInfo.picture}
+          alt={user.name}
+          src={user.picture}
           className={classes.avatar}
-          onClick={() => history.push(`/profile/${user.userInfo._id}`)}
+          onClick={() => history.push(`/profile/${user._id}`)}
         />
       );
     }
@@ -55,20 +59,21 @@ function Layout({ children }) {
   const handleLogin = (e) => {
     e.preventDefault();
     const googleLoginUrl = "http://localhost:5000/api/v1/google";
-    const newWindow = window.open(
-      googleLoginUrl,
-      "_blank",
-      "width=500,height=600"
-    );
+    // const newWindow = window.open(googleLoginUrl, "_self");
+    window.open(googleLoginUrl, "_self");
 
-    if (newWindow) {
-      let timer = setInterval(() => {
-        if (newWindow.closed) {
-          dispatch(googleLogin());
-          if (timer) clearInterval(timer);
-        }
-      }, 500);
-    }
+    // if (newWindow) {
+    //   let timer = setInterval(() => {
+    //     if (newWindow.closed) {
+    //       dispatch(googleLogin());
+    //       if (timer) clearInterval(timer);
+    //     }
+    //   }, 500);
+    // }
+  };
+
+  const handleLogout = (e) => {
+    dispatch(googleLogout());
   };
 
   return (
@@ -88,7 +93,11 @@ function Layout({ children }) {
             </IconButton>
             {renderedSignIn()}
             {/* <GoogleAuth /> */}
-            <Button onClick={handleLogin}>Login Bro</Button>
+            {user ? (
+              <Button onClick={handleLogout}>Log out</Button>
+            ) : (
+              <Button onClick={handleLogin}>Login Bro</Button>
+            )}
           </Toolbar>
         </AppBar>
         {children}

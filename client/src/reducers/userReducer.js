@@ -14,9 +14,9 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
-      return { ...state, isSignedIn: true, userInfo: action.payload }; //immute changing object
+      return { ...state, userInfo: action.payload }; //immute changing object
     case LOGOUT:
-      return { ...state, isSignedIn: false, userInfo: null };
+      return { ...state, userInfo: null };
     case FETCH_USER:
       return { ...state, fetchedUser: action.payload };
     case UPDATE_USER_PROFILE:
