@@ -5,17 +5,8 @@ axios.defaults.withCredentials = true;
 
 // google login
 
-export const googleAuthLogin = (data) =>
-  axios.post(
-    Url + "/google",
-    { token: data },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-export const googleAuthLogout = () => axios.delete(Url + "/logout");
+export const googleAuthLogin = () => axios.get(Url + "/google");
+export const googleAuthLogout = () => axios.get(Url + "/logout");
 
 // users
 
@@ -24,7 +15,7 @@ export const fetchUser = (id) => axios.get(Url + `/user/${id}`);
 export const updateUser = (id, userData) =>
   axios.patch(Url + `/user/${id}`, userData);
 
-export const getReqUser = () => axios.get(Url);
+export const getReqUser = () => axios.get(Url + "/user");
 
 // posts
 

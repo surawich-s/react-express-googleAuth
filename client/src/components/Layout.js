@@ -8,10 +8,11 @@ import IconButton from "@material-ui/core/IconButton";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import Avatar from "@material-ui/core/Avatar";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import GoogleAuth from "./GoogleAuth";
-import { getReqUser } from "../api/";
+import { getReqUser, googleAuthLogin } from "../api/";
+import { googleLogin } from "../actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,14 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const reqUser = async () => {
-  await getReqUser().then((response) => console.log(response.data));
-};
-
 function Layout({ children }) {
   const classes = useStyles();
 
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const renderedSignIn = () => {
@@ -51,6 +49,25 @@ function Layout({ children }) {
           onClick={() => history.push(`/profile/${user.userInfo._id}`)}
         />
       );
+    }
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const googleLoginUrl = "http://localhost:5000/api/v1/google";
+    const newWindow = window.open(
+      googleLoginUrl,
+      "_blank",
+      "width=500,height=600"
+    );
+
+    if (newWindow) {
+      let timer = setInterval(() => {
+        if (newWindow.closed) {
+          dispatch(googleLogin());
+          if (timer) clearInterval(timer);
+        }
+      }, 500);
     }
   };
 
@@ -69,9 +86,9 @@ function Layout({ children }) {
               <InstagramIcon />
               Instagram
             </IconButton>
-            <Button onClick={reqUser}>Get UserData</Button>
             {renderedSignIn()}
-            <GoogleAuth />
+            {/* <GoogleAuth /> */}
+            <Button onClick={handleLogin}>Login Bro</Button>
           </Toolbar>
         </AppBar>
         {children}

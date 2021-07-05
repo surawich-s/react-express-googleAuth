@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 mongoose
   .connect(process.env.CONNECTION_URL, {
@@ -49,39 +49,13 @@ function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);
 }
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["email", "profile"] })
-);
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//   res.header("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/auth/google/success",
-    failureRedirect: "/auth/google/failure",
-  })
-);
-
-app.get("/logout", async (req, res) => {
-  req.logout();
-  await req.session.destroy();
-  res.status(200).json({
-    message: "Logged out successfully",
-  });
-});
-
-app.get("/auth/google/success", (req, res) => {
-  res.send(req.user);
-  // res.status(200).json(req.user);
-});
-
-app.get("/auth/google/failure", (req, res) => {
-  res.status(401).json({
-    message: "Unauthorized",
-  });
-});
-
-app.use("/api/v1/", isLoggedIn, userRoutes);
+app.use("/api/v1/", userRoutes);
 app.use("/api/v1/posts", isLoggedIn, postRoutes);
 
 app.listen(PORT, () => {

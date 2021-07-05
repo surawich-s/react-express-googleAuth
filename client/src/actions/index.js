@@ -18,9 +18,10 @@ import {
 
 // User actions
 
-export const googleLogin = (token) => async (dispatch) => {
+export const googleLogin = () => async (dispatch) => {
   try {
-    const { data } = await api.googleAuthLogin(token);
+    const { data } = await api.getReqUser();
+    console.log(data);
     dispatch({ type: LOGIN, payload: data });
   } catch (error) {
     console.log(error);
