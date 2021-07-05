@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@material-ui/core";
 
 function UploadBase64({ defaultPicture, handleDoneUpload }) {
-  const [files, setFiles] = useState(defaultPicture);
+  const [files, setFiles] = useState(defaultPicture || "no picture");
 
   useEffect(() => {
     // console.log(files.base64);

@@ -17,6 +17,12 @@ export const updateUser = (id, userData) =>
 
 export const getReqUser = () => axios.get(Url + "/user");
 
+// follow
+
+export const followUser = (id) => axios.post(Url + `/follow/${id}`);
+export const unfollowUser = (id) => axios.post(Url + `/unfollow/${id}`);
+export const checkFollow = (id) => axios.get(Url + `/checkfollow/${id}`);
+
 // posts
 
 export const createPost = (post) => axios.post(Url + "/posts/", post);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Button, ThemeProvider } from "@material-ui/core";
+import { Container, Button, ThemeProvider, Box } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -8,6 +8,7 @@ import { Avatar, LinearProgress } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router";
 import { fetchUser, fetchUserPosts } from "../../actions/";
+import FollowButton from "../FollowButton";
 import PostForm from "../Forms/PostForm";
 import UserPosts from "../UserPosts";
 
@@ -29,8 +30,34 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
   },
 
+  profileHeader: {
+    display: "flex",
+    paddingLeft: 0,
+    flexWrap: "wrap",
+  },
+
+  profileName: {
+    marginRight: theme.spacing(2),
+  },
+
   profileButton: {
-    marginLeft: theme.spacing(2),
+    // marginLeft: theme.spacing(2),
+    // maxWidth: "fit-content",
+  },
+
+  userProfileInfo: {
+    display: "flex",
+    flexWrap: "wrap",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+
+  userProfileInfoElement: {
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+    "& span": {
+      fontWeight: "bold",
+    },
   },
 }));
 
@@ -76,27 +103,48 @@ function Profile() {
               />
             </Grid>
             <Grid item xs={7}>
-              <Typography gutterBottom variant="h6" color="textPrimary">
-                {user.name}
+              <Container className={classes.profileHeader}>
+                <Typography
+                  className={classes.profileName}
+                  variant="h6"
+                  color="textPrimary"
+                >
+                  {user.name}
+                </Typography>
 
                 {user._id === userLogin._id ? (
-                  <Button
-                    variant="outlined"
-                    className={classes.profileButton}
-                    onClick={() => history.push(`/profile/${id}/edit`)}
-                  >
-                    Edit Profile
-                  </Button>
+                  <Box className={classes.profileButton}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => history.push(`/profile/${id}/edit`)}
+                    >
+                      Edit Profile
+                    </Button>
+                  </Box>
                 ) : (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.profileButton}
-                  >
-                    Follow
-                  </Button>
+                  <Box className={classes.profileButton}>
+                    <FollowButton id={user._id} />
+                  </Box>
                 )}
-              </Typography>
+              </Container>
+
+              <Grid item className={classes.userProfileInfo}>
+                <Grid item className={classes.userProfileInfoElement}>
+                  <Typography variant="body1">
+                    <span>{user.postCount}</span> posts
+                  </Typography>
+                </Grid>
+                <Grid item className={classes.userProfileInfoElement}>
+                  <Typography variant="body1">
+                    <span>{user.followerCount}</span> followers
+                  </Typography>
+                </Grid>
+                <Grid item className={classes.userProfileInfoElement}>
+                  <Typography variant="body1">
+                    <span>{user.followingCount}</span> following
+                  </Typography>
+                </Grid>
+              </Grid>
 
               <Typography>{user.profileDescription}</Typography>
             </Grid>

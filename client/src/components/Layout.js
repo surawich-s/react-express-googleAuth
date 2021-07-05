@@ -74,6 +74,7 @@ function Layout({ children }) {
 
   const handleLogout = (e) => {
     dispatch(googleLogout());
+    history.push("/");
   };
 
   return (

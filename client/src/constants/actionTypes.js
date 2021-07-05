@@ -4,6 +4,10 @@ export const LOGOUT = "LOGOUT";
 export const FETCH_USER = "FETCH_USER";
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 
+//Follow
+export const FOLLOW_USER = "FOLLOW_USER";
+export const UNFOLLOW_USER = "UNFOLLOW_USER";
+
 // Post
 export const CREATE_POST = "CREATE_POST";
 export const FETCH_USER_POSTS = "FETCH_USER_POSTS";

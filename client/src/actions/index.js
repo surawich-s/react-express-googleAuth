@@ -14,6 +14,8 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   DELETE_COMMENT,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
 } from "../constants/actionTypes";
 
 // User actions
@@ -21,7 +23,7 @@ import {
 export const googleLogin = () => async (dispatch) => {
   try {
     const { data } = await api.getReqUser();
-    console.log(data);
+    // console.log(data);
     dispatch({ type: LOGIN, payload: data });
   } catch (error) {
     console.log(error);
@@ -55,6 +57,26 @@ export const updateUser = (id, userData) => async (dispatch) => {
   }
 };
 
+// Follow
+
+export const followUser = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.followUser(id);
+    dispatch({ type: FOLLOW_USER, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unfollowUser = (id) => async (dispatch) => {
+  try {
+    const { data } = await api.unfollowUser(id);
+    dispatch({ type: UNFOLLOW_USER, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // Post actions
 
 export const createPost = (post) => async (dispatch) => {
@@ -70,7 +92,7 @@ export const fetchUserPosts = (id) => async (dispatch) => {
   try {
     const { data } = await api.fetchUserPosts(id);
     dispatch({ type: FETCH_USER_POSTS, payload: data });
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.log(error);
   }

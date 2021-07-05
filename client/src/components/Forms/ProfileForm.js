@@ -51,18 +51,18 @@ function ProfileForm({ userInfo, id }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(userData);
+    console.log({ userData, picture: profilePicture });
     dispatch(updateUser(id, userData));
   };
 
   const handleOnDoneUpload = (uploadedFiles) => {
     setUserData({ ...userData, picture: uploadedFiles });
+    setProfilePicture(uploadedFiles);
   };
 
   if (!userData) {
     return <LinearProgress />;
   }
-
-  console.log(profilePicture);
 
   return (
     <Container className={classes.form}>
@@ -91,7 +91,7 @@ function ProfileForm({ userInfo, id }) {
           </Grid>
           <Grid container xs={9} className={classes.formField}>
             <UploadBase64
-              defaultPicture={userData.picture}
+              defaultPicture={profilePicture}
               handleDoneUpload={handleOnDoneUpload}
             />
           </Grid>

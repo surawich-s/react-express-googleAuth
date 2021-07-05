@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Follow = require("../models/follow");
 
 exports.getUser = (req, res) => {
   res.status(200).json(req.user);
@@ -26,6 +27,45 @@ exports.updateUser = async (req, res) => {
       { new: true }
     );
     res.status(201).json(updatedUser);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+
+exports.followUser = async (req, res) => {
+  const { id } = req.params;
+  const _user = req.user._id;
+
+  try {
+    const newFollow = new Follow({ followee: id, follower: _user });
+    await newFollow.save();
+    await User.findByIdAndUpdate(id, { $inc: { followerCount: 1 } });
+    await User.findByIdAndUpdate(_user, { $inc: { followingCount: 1 } });
+    res.status(200).json(`${_user} follows ${id}`);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+
+exports.unfollowUser = async (req, res) => {
+  const { id } = req.params;
+  const _user = req.user._id;
+  try {
+    await Follow.findOneAndDelete({ followee: id, follower: _user });
+    await User.findByIdAndUpdate(id, { $inc: { followerCount: -1 } });
+    await User.findByIdAndUpdate(_user, { $inc: { followingCount: -1 } });
+    res.status(200).json(`${_user} unfollows ${id}`);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
+
+exports.getFollow = async (req, res) => {
+  const { id } = req.params;
+  const _user = req.user._id;
+  try {
+    const checkFollow = await Follow.exists({ followee: id, follower: _user });
+    res.status(200).json(checkFollow);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
