@@ -10,6 +10,13 @@ import {
 import PostDetail from "../PostDetail";
 
 const useStyles = makeStyles((theme) => ({
+  postsContainer: {
+    width: "100%",
+    // backgroundColor: "cornsilk",
+    paddingTop: "10px",
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
   post: {
     marginTop: 20,
     marginBottom: 20,
@@ -29,7 +36,7 @@ function Posts(props) {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container className={classes.postsContainer} maxWidth="lg">
       <Grid
         container
         direction="column"

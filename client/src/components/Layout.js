@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appbar: {
     width: "100%",
-    height: "70px",
-    marginBottom: "20px",
+    // height: "70px",
+    marginBottom: "0",
     backgroundColor: "#fefefe",
   },
   menuButton: {
@@ -79,30 +79,29 @@ function Layout({ children }) {
 
   return (
     <>
-      <Container className={classes.root}>
-        <AppBar position="static" className={classes.appbar} elevation={1}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="secondary"
-              aria-label="menu"
-              onClick={() => history.push("/")}
-            >
-              <InstagramIcon />
-              Instagram
-            </IconButton>
-            {renderedSignIn()}
-            {/* <GoogleAuth /> */}
-            {user ? (
-              <Button onClick={handleLogout}>Log out</Button>
-            ) : (
-              <Button onClick={handleLogin}>Login Bro</Button>
-            )}
-          </Toolbar>
-        </AppBar>
-        {children}
-      </Container>
+      <AppBar position="sticky" className={classes.appbar} elevation={1}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="secondary"
+            aria-label="menu"
+            onClick={() => history.push("/")}
+          >
+            <InstagramIcon />
+            Instagram
+          </IconButton>
+          {renderedSignIn()}
+          {/* <GoogleAuth /> */}
+          {user ? (
+            <Button onClick={handleLogout}>Log out</Button>
+          ) : (
+            <Button onClick={handleLogin}>Login Bro</Button>
+          )}
+        </Toolbar>
+      </AppBar>
+      {/* <Container className={classes.root}>{children}</Container> */}
+      {children}
     </>
   );
 }

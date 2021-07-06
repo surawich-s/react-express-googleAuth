@@ -3,6 +3,8 @@ import {
   LOGOUT,
   FETCH_USER,
   UPDATE_USER_PROFILE,
+  FOLLOW_USER,
+  UNFOLLOW_USER,
 } from "../constants/actionTypes";
 
 const INITIAL_STATE = {
@@ -20,7 +22,9 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case FETCH_USER:
       return { ...state, fetchedUser: action.payload };
     case UPDATE_USER_PROFILE:
-      return { ...state, userInfo: action.payload };
+    case FOLLOW_USER:
+    case UNFOLLOW_USER:
+      return { ...state, fetchedUser: action.payload };
 
     default:
       return state;

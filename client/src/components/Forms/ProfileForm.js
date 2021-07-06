@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Button,
@@ -41,23 +41,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ProfileForm({ userInfo, id }) {
-  const [userData, setUserData] = useState(userInfo);
-  const [profilePicture, setProfilePicture] = useState(userInfo.picture);
+const INITIAL_STATE = {
+  name: "",
+  picture: "",
+  profileDescription: "",
+};
+
+function ProfileForm({ name, picture, profileDescription, id }) {
+  const [userData, setUserData] = useState(INITIAL_STATE);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
 
+  useEffect(() => {
+    setUserData({
+      name: name,
+      picture: picture,
+      profileDescription: profileDescription,
+    });
+  }, []);
+
+  console.log(userData);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(userData);
-    console.log({ userData, picture: profilePicture });
     dispatch(updateUser(id, userData));
+    history.push(`/profile/${id}`);
   };
 
   const handleOnDoneUpload = (uploadedFiles) => {
     setUserData({ ...userData, picture: uploadedFiles });
-    setProfilePicture(uploadedFiles);
+    // dispatch(updateUser(id, { picture: uploadedFiles }));
   };
 
   if (!userData) {
@@ -87,11 +102,11 @@ function ProfileForm({ userInfo, id }) {
             justify="flex-end"
             className={classes.formLabel}
           >
-            <Avatar alt={userData.name} src={profilePicture} />
+            <Avatar alt={userData.name} src={userData.picture} />
           </Grid>
           <Grid container xs={9} className={classes.formField}>
             <UploadBase64
-              defaultPicture={profilePicture}
+              defaultPicture={userData.picture}
               handleDoneUpload={handleOnDoneUpload}
             />
           </Grid>
@@ -149,7 +164,7 @@ function ProfileForm({ userInfo, id }) {
               variant="contained"
               className={classes.submitButton}
             >
-              Submit
+              Save
             </Button>
           </Grid>
         </Grid>

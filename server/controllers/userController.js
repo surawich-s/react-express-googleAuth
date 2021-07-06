@@ -39,9 +39,13 @@ exports.followUser = async (req, res) => {
   try {
     const newFollow = new Follow({ followee: id, follower: _user });
     await newFollow.save();
-    await User.findByIdAndUpdate(id, { $inc: { followerCount: 1 } });
+    const newProfile = await User.findByIdAndUpdate(
+      id,
+      { $inc: { followerCount: 1 } },
+      { new: true }
+    );
     await User.findByIdAndUpdate(_user, { $inc: { followingCount: 1 } });
-    res.status(200).json(`${_user} follows ${id}`);
+    res.status(200).json(newProfile);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -52,9 +56,13 @@ exports.unfollowUser = async (req, res) => {
   const _user = req.user._id;
   try {
     await Follow.findOneAndDelete({ followee: id, follower: _user });
-    await User.findByIdAndUpdate(id, { $inc: { followerCount: -1 } });
+    const newProfile = await User.findByIdAndUpdate(
+      id,
+      { $inc: { followerCount: -1 } },
+      { new: true }
+    );
     await User.findByIdAndUpdate(_user, { $inc: { followingCount: -1 } });
-    res.status(200).json(`${_user} unfollows ${id}`);
+    res.status(200).json(newProfile);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }

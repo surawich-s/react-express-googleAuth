@@ -7,11 +7,17 @@ import ProfileForm from "../Forms/ProfileForm";
 function EditProfile(props) {
   const userInfo = useSelector((state) => state.user.userInfo);
   const { id } = useParams();
-  console.log(userInfo);
   if (!userInfo) {
     return <LinearProgress />;
   }
-  return <ProfileForm userInfo={userInfo} id={id} />;
+  return (
+    <ProfileForm
+      name={userInfo.name}
+      picture={userInfo.picture}
+      profileDescription={userInfo.profileDescription}
+      id={id}
+    />
+  );
 }
 
 export default EditProfile;

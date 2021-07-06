@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   commentform: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
   },
   field: {
     display: "block",

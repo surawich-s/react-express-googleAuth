@@ -15,10 +15,12 @@ import UserPosts from "../UserPosts";
 const useStyles = makeStyles((theme) => ({
   root: {
     // flexGrow: 1,
+    marginTop: "10px",
   },
   paper: {
     padding: theme.spacing(2),
     maxWidth: "100%",
+    backgroundColor: "inherit",
   },
   avatarContainer: {
     marginLeft: "auto",
@@ -83,6 +85,8 @@ function Profile() {
   if (!posts || !user || !userLogin) {
     return <LinearProgress />;
   }
+
+  const userPosts = posts.filter((post) => post._user._id == user._id);
 
   return (
     <>
@@ -153,8 +157,9 @@ function Profile() {
         {user._id === userLogin._id && (
           <PostForm id={id} userName={user.name} userAvatar={user.picture} />
         )}
+
+        <UserPosts posts={userPosts} />
       </Container>
-      <UserPosts posts={posts} />
     </>
   );
 }
