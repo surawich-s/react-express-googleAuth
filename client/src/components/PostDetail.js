@@ -9,6 +9,7 @@ import {
   LinearProgress,
   Typography,
   Link,
+  Avatar,
 } from "@material-ui/core";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
@@ -49,6 +50,16 @@ const useStyles = makeStyles((theme) => ({
   content: {
     paddingTop: 0,
   },
+
+  contentModal: {
+    paddingTop: 0,
+    borderTop: "1px solid rgb(230,230,230)",
+  },
+  postDescriptionAvatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    marginRight: theme.spacing(1),
+  },
 }));
 
 function PostDetail({ post }, ref) {
@@ -59,7 +70,6 @@ function PostDetail({ post }, ref) {
 
   const handleFocus = (e) => {
     e.preventDefault();
-    console.log(ref);
     inputRef.current.focus();
   };
 
@@ -68,14 +78,14 @@ function PostDetail({ post }, ref) {
       return (
         <Card className={classes.rootmodal} ref={ref}>
           <Grid container>
-            <Grid item md={8}>
+            <Grid item xs={12} sm={8}>
               <img className={classes.media} src={post.postImage} />
             </Grid>
 
             <Grid
               item
-              md={4}
-              sm={12}
+              sm={4}
+              xs={12}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -84,23 +94,34 @@ function PostDetail({ post }, ref) {
             >
               <PostDetailHeader post={post} />
               <CardContent
-                className={classes.content}
-                style={{ flexGrow: "1" }}
+                className={classes.contentModal}
+                // style={{ flexGrow: "1" }}
               >
-                <Typography variant="body1" color="textPrimary" component="p">
-                  <Link
+                <>
+                  <Avatar
+                    aria-label="avatar"
+                    alt={post._user.name}
+                    src={post._user.picture}
                     onClick={() => history.push(`/profile/${post._user._id}`)}
-                  >
-                    {post._user.name}
-                  </Link>{" "}
-                  <span style={{ textDecorationStyle: "none" }}>
-                    {post.postDescription}
-                  </span>
-                </Typography>
+                    className={classes.postDescriptionAvatar}
+                  />
+                  <Typography variant="body1" color="textPrimary" component="p">
+                    <Link
+                      onClick={() => history.push(`/profile/${post._user._id}`)}
+                    >
+                      {post._user.name}
+                    </Link>{" "}
+                    <span style={{ textDecorationStyle: "none" }}>
+                      {post.postDescription}
+                    </span>
+                  </Typography>
+                </>
+
                 <CommentList
                   comments={post._comments}
                   postId={post._id}
                   userId={user._id}
+                  showAvatar={true}
                 />
               </CardContent>
               <div style={{ marginBottom: "auto" }}>

@@ -4,9 +4,10 @@ import PostDetail from "./PostDetail";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: "block",
+    position: "absolute",
+    marginTop: "10%",
+    overflow: "scroll",
   },
 }));
 
@@ -26,9 +27,7 @@ function PostDetailModal({ post, open, setOpen }) {
         onClose={handleClose}
         className={classes.modal}
       >
-        <div>
-          <PostDetail post={post} ref={ref} />
-        </div>
+        <PostDetail post={post} ref={ref} />
       </Modal>
     </>
   );

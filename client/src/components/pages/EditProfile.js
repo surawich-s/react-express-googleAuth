@@ -1,6 +1,6 @@
 import React from "react";
 import { LinearProgress } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import ProfileForm from "../Forms/ProfileForm";
 

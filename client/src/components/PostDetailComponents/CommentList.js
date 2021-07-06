@@ -1,13 +1,22 @@
-import React, { useEffect } from "react";
-import { Grid, Typography, Link } from "@material-ui/core";
+import React from "react";
+import { Grid, Typography, Link, Avatar, makeStyles } from "@material-ui/core";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import SettingButton from "./SettingButton";
 import { removeComment } from "../../actions";
 
-function CommentList({ comments, postId, userId }) {
+const useStyles = makeStyles((theme) => ({
+  commentAvatar: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    marginRight: theme.spacing(1),
+  },
+}));
+
+function CommentList({ comments, postId, userId, showAvatar }) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const handleRemove = (commentId) => {
     dispatch(removeComment(postId, commentId));
@@ -27,6 +36,16 @@ function CommentList({ comments, postId, userId }) {
                 alignItems: "center",
               }}
             >
+              {showAvatar && (
+                <Avatar
+                  aria-label="avatar"
+                  alt={comment._user.name}
+                  src={comment._user.picture}
+                  onClick={() => history.push(`/profile/${comment._user._id}`)}
+                  className={classes.commentAvatar}
+                />
+              )}
+
               <Typography variant="body1" color="textPrimary" component="p">
                 <Link
                   onClick={() => history.push(`/profile/${comment._user._id}`)}

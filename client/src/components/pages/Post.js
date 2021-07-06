@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "block",
     margin: "auto",
+    marginTop: "20px",
   },
 }));
 

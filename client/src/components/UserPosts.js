@@ -18,9 +18,21 @@ function UserPosts({ posts }) {
 
   return (
     <Box className={classes.userPostsBox} borderTop={1} borderColor="grey.500">
-      <Grid container spacing={1}>
+      <Grid
+        container
+        // justify="center"
+        className={classes.userPostsGridContiner}
+        spacing={2}
+      >
         {posts.map((post) => (
-          <Grid key={post._id} item xs={4} style={{ padding: 0 }}>
+          <Grid
+            key={post._id}
+            item
+            xs={6}
+            sm={4}
+
+            // style={{ padding: 0 }}
+          >
             <UserPost post={post} />
           </Grid>
         ))}
