@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     display: "block",
     position: "absolute",
-    marginTop: "10%",
     overflow: "scroll",
   },
 }));

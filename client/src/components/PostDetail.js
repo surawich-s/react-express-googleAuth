@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
   },
+
   media: {
     width: "100%",
     height: "100%",
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   actionbar: {
     paddingTop: 0,
     paddingBottom: 0,
+    bottom: 0,
   },
   likeModal: {
     paddingTop: 0,
@@ -53,8 +55,12 @@ const useStyles = makeStyles((theme) => ({
 
   contentModal: {
     paddingTop: 0,
-    borderTop: "1px solid rgb(230,230,230)",
   },
+
+  postDescriptionContainer: {
+    display: "flex",
+  },
+
   postDescriptionAvatar: {
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -78,13 +84,14 @@ function PostDetail({ post }, ref) {
       return (
         <Card className={classes.rootmodal} ref={ref}>
           <Grid container>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={7} md={8}>
               <img className={classes.media} src={post.postImage} />
             </Grid>
 
             <Grid
               item
-              sm={4}
+              md={4}
+              sm={5}
               xs={12}
               style={{
                 display: "flex",
@@ -97,7 +104,7 @@ function PostDetail({ post }, ref) {
                 className={classes.contentModal}
                 // style={{ flexGrow: "1" }}
               >
-                <>
+                <div className={classes.postDescriptionContainer}>
                   <Avatar
                     aria-label="avatar"
                     alt={post._user.name}
@@ -115,7 +122,7 @@ function PostDetail({ post }, ref) {
                       {post.postDescription}
                     </span>
                   </Typography>
-                </>
+                </div>
 
                 <CommentList
                   comments={post._comments}
@@ -124,7 +131,13 @@ function PostDetail({ post }, ref) {
                   showAvatar={true}
                 />
               </CardContent>
-              <div style={{ marginBottom: "auto" }}>
+              <div
+                style={{
+                  bottom: "0",
+                  marginTop: "auto",
+                }}
+              >
+                {/* <div> */}
                 <CardActions className={classes.actionbar}>
                   <LikeButton userId={user._id} postId={post._id} />
                   <IconButton aria-label="comment" onClick={handleFocus}>
@@ -149,7 +162,7 @@ function PostDetail({ post }, ref) {
       );
     } else {
       return (
-        <Card className={classes.root} ref={ref}>
+        <Card className={classes.root}>
           <PostDetailHeader post={post} />
           <img className={classes.media} src={post.postImage} />
           <CardActions className={classes.actionbar}>
