@@ -5,8 +5,12 @@ import PostDetailModal from "./PostDetailModal";
 const useStyles = makeStyles((theme) => ({
   image: {
     width: "100%",
-    height: "100%",
+    height: "70%",
     objectFit: "cover",
+    "&:hover": {
+      transition: "0.5s",
+      filter: "brightness(75%)",
+    },
   },
 }));
 

@@ -30,13 +30,16 @@ function SettingButton({ postId, ownId, userId, commentUserId, handleRemove }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {postId ? (
+        {postId && (
           <MenuItem onClick={() => history.push(`/p/${postId}`)}>
             Go to Post
           </MenuItem>
-        ) : null}
-        {commentUserId === userId && (
-          <MenuItem onClick={handleDelete}>Delete</MenuItem>
+        )}
+        {postId && ownId === userId && (
+          <MenuItem onClick={handleDelete}>Delete Post</MenuItem>
+        )}
+        {userId && commentUserId === userId && (
+          <MenuItem onClick={handleDelete}>Delete Comment</MenuItem>
         )}
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu>

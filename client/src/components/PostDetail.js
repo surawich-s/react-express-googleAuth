@@ -37,8 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
   media: {
     width: "100%",
-    height: "100%",
+    height: "auto",
     objectFit: "cover",
+  },
+  mediaModal: {
+    width: "100%",
+    height: "50vw",
   },
   actionbar: {
     paddingTop: 0,
@@ -85,7 +89,7 @@ function PostDetail({ post }, ref) {
         <Card className={classes.rootmodal} ref={ref}>
           <Grid container>
             <Grid item xs={12} sm={7} md={8}>
-              <img className={classes.media} src={post.postImage} />
+              <img className={classes.mediaModal} src={post.postImage} />
             </Grid>
 
             <Grid

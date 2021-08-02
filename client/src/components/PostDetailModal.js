@@ -4,9 +4,9 @@ import PostDetail from "./PostDetail";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: "block",
-    position: "absolute",
-    overflow: "scroll",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
 }));
 
@@ -18,17 +18,15 @@ function PostDetailModal({ post, open, setOpen }) {
     setOpen(false);
   };
   return (
-    <>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-        className={classes.modal}
-      >
-        <PostDetail post={post} ref={ref} />
-      </Modal>
-    </>
+    <Modal
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+      open={open}
+      onClose={handleClose}
+      className={classes.modal}
+    >
+      <PostDetail post={post} ref={ref} />
+    </Modal>
   );
 }
 
