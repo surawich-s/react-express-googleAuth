@@ -25,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     paddingLeft: "15%",
+    paddingTop: theme.spacing(2),
   },
   formElement: {
-    marginBottom: "20px",
+    marginBottom: theme.spacing(2),
   },
   formLabel: {
     paddingRight: "20px",
@@ -81,14 +82,6 @@ function ProfileForm({ name, picture, profileDescription, id }) {
 
   return (
     <Container className={classes.form}>
-      {/* <Typography
-        variant="h6"
-        // color="textSecondary"
-        component="h2"
-        gutterBottom
-      >
-        Edit Profile
-      </Typography> */}
       <form
         className={classes.formContainer}
         noValidate

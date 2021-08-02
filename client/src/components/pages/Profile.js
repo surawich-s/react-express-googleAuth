@@ -86,7 +86,7 @@ function Profile() {
     return <LinearProgress />;
   }
 
-  const userPosts = posts.filter((post) => post._user._id == user._id);
+  const userPosts = posts.filter((post) => post._user._id === user._id);
 
   return (
     <>

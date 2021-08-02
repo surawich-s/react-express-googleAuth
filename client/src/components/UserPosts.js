@@ -17,7 +17,7 @@ function UserPosts({ posts }) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.userPostsBox} borderTop={1} borderColor="grey.500">
+    <Box className={classes.userPostsBox} borderTop={1} borderColor="dbdbdb">
       <Grid
         container
         // justify="center"

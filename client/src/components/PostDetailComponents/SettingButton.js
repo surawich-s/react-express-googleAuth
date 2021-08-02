@@ -35,9 +35,6 @@ function SettingButton({ postId, ownId, userId, commentUserId, handleRemove }) {
             Go to Post
           </MenuItem>
         )}
-        {postId && ownId === userId && (
-          <MenuItem onClick={handleDelete}>Delete Post</MenuItem>
-        )}
         {userId && commentUserId === userId && (
           <MenuItem onClick={handleDelete}>Delete Comment</MenuItem>
         )}
