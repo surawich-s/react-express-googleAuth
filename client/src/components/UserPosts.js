@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3),
     marginTop: theme.spacing(3),
   },
+  userPostsGridContiner: {},
   noPosts: {
     marginLeft: "auto",
     marginRight: "auto",
@@ -20,7 +21,7 @@ function UserPosts({ posts }) {
     <Box className={classes.userPostsBox} borderTop={1} borderColor="dbdbdb">
       <Grid
         container
-        // justify="center"
+        justify="center"
         className={classes.userPostsGridContiner}
         spacing={2}
       >
@@ -28,8 +29,9 @@ function UserPosts({ posts }) {
           <Grid
             key={post._id}
             item
-            xs={6}
-            sm={4}
+            xs={12}
+            sm={6}
+            md={4}
 
             // style={{ padding: 0 }}
           >

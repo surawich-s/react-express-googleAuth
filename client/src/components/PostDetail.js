@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mediaModal: {
     width: "100%",
-    height: "auto",
+    height: "50vw",
   },
   postDetailHeaderModal: {
     width: "100%",

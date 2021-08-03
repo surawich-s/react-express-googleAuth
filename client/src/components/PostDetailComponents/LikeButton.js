@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { IconButton } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { likePost, unlikePost } from "../../actions";
 import { getLike } from "../../api";
 
@@ -31,7 +32,11 @@ function LikeButton({ postId }) {
       onClick={handleLike}
       color={liked ? "primary" : "secondary"}
     >
-      <FavoriteIcon />
+      {liked ? (
+        <FavoriteIcon color="primary" />
+      ) : (
+        <FavoriteBorderIcon color="#000000" />
+      )}
     </IconButton>
   );
 }
