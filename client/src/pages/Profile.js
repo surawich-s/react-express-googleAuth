@@ -9,12 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router';
 import { fetchUser, fetchUserPosts } from '../actions';
 import FollowButton from '../components/FollowButton';
-import PostForm from '../components/forms/PostForm';
 import UserPosts from '../components/UserPosts';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		// flexGrow: 1,
 		marginTop: '10px',
 	},
 	paper: {
@@ -61,6 +59,11 @@ const useStyles = makeStyles((theme) => ({
 			fontWeight: 'bold',
 		},
 	},
+
+	userPostsBox: {
+		display: 'flex',
+		justifyContent: 'center',
+	},
 }));
 
 function Profile() {
@@ -86,6 +89,7 @@ function Profile() {
 		return <LinearProgress />;
 	}
 
+	// TODO: need restful way to get userpost from server
 	const userPosts = posts.filter((post) => post._user._id === user._id);
 
 	return (
@@ -150,11 +154,9 @@ function Profile() {
 						</Grid>
 					</Grid>
 				</Paper>
-				{user._id === userLogin._id && (
-					<PostForm id={id} userName={user.name} userAvatar={user.picture} />
-				)}
-
-				<UserPosts posts={userPosts} />
+				<Box className={classes.userPostsBox}>
+					<UserPosts posts={userPosts.reverse()} />
+				</Box>
 			</Container>
 		</>
 	);

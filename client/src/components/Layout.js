@@ -6,13 +6,13 @@ import {
 	IconButton,
 	Avatar,
 	makeStyles,
+	Box,
 } from '@material-ui/core';
-
 import InstagramIcon from '@material-ui/icons/Instagram';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { googleLogin, googleLogout } from '../actions';
+import PostForm from '../components/forms/PostForm';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -23,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
 		marginBottom: '0',
 		backgroundColor: '#fefefe',
 	},
-	menuButton: {
+	logoButton: {
 		flexGrow: 1,
+		display: 'flex',
+		justifyContent: 'center',
 	},
 	avatar: {
 		marginRight: theme.spacing(2),
@@ -34,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
 function Layout({ children }) {
 	const classes = useStyles();
 
-	const user = useSelector((state) => state.user.userInfo);
+	const { user, userLogin } = useSelector((state) => ({
+		user: state.user.fetchedUser,
+		userLogin: state.user.userInfo,
+	}));
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -43,13 +48,13 @@ function Layout({ children }) {
 	}, [dispatch]);
 
 	const renderedSignIn = () => {
-		if (user) {
+		if (userLogin) {
 			return (
 				<Avatar
-					alt={user.name}
-					src={user.picture}
+					alt={userLogin.name}
+					src={userLogin.picture}
 					className={classes.avatar}
-					onClick={() => history.push(`/profile/${user._id}`)}
+					onClick={() => history.push(`/profile/${userLogin._id}`)}
 				/>
 			);
 		}
@@ -70,17 +75,22 @@ function Layout({ children }) {
 		<>
 			<AppBar position="sticky" className={classes.appbar} elevation={1}>
 				<Toolbar>
-					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="black"
-						aria-label="menu"
-						onClick={() => history.push('/')}
-					>
-						<InstagramIcon />
-						Instagram
-					</IconButton>
+					<Box className={classes.logoButton}>
+						<IconButton
+							disableRipple={true}
+							disableFocusRipple={true}
+							color="black"
+							aria-label="logo"
+							onClick={() => history.push('/')}
+						>
+							<InstagramIcon />
+							Instagram
+						</IconButton>
+					</Box>
+
+					<PostForm />
 					{renderedSignIn()}
+
 					{user ? (
 						<Button onClick={handleLogout}>Log out</Button>
 					) : (

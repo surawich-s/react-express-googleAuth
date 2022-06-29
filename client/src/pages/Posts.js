@@ -7,11 +7,11 @@ import {
 	Grid,
 	Container,
 } from '@material-ui/core';
-import PostDetail from '../components/postdetail/PostDetail';
+import PostFeed from '../components/postdetail/PostFeed';
 
 const useStyles = makeStyles((theme) => ({
 	postsContainer: {
-		width: '100%',
+		width: '50vw',
 		backgroundColor: '#FAFAFA',
 		paddingTop: '10px',
 		paddingLeft: 0,
@@ -37,10 +37,10 @@ function Posts(props) {
 
 	return (
 		<Container className={classes.postsContainer} maxWidth="lg">
-			<Grid container direction="column" justify="flex-start" alignItems="center">
-				{posts.map((post) => (
+			<Grid container direction="row" justify="flex-start" alignItems="center">
+				{posts.reverse().map((post) => (
 					<Grid className={classes.post} item xs={12} key={post._id}>
-						<PostDetail post={post} />
+						<PostFeed post={post} />
 					</Grid>
 				))}
 			</Grid>

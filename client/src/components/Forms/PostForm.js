@@ -5,7 +5,7 @@ import {
 	Button,
 	Container,
 	TextField,
-	Box,
+	IconButton,
 	makeStyles,
 	Modal,
 	Fade,
@@ -43,14 +43,11 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function PostForm({ id, userName, userAvatar }) {
+function PostForm() {
 	const dispatch = useDispatch();
 	const classes = useStyles();
 	const history = useHistory();
 	const [postData, setPostData] = useState({
-		// userId: id,
-		// userName: userName,
-		// userAvatar: userAvatar,
 		postImage: '',
 		postDescription: '',
 	});
@@ -66,26 +63,29 @@ function PostForm({ id, userName, userAvatar }) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		// if (postData.postImage) {
+		// 	dispatch(createPost(postData));
+		// 	handleClose();
+		// 	history.push(`/profile/${id}`);
+		// }
 		if (postData.postImage) {
 			dispatch(createPost(postData));
 			handleClose();
-			history.push(`/profile/${id}`);
+			history.push('/');
 		}
 	};
 
 	return (
 		<>
-			<Box display="flex" justifyContent="center" alignItems="center">
-				<Button
-					variant="contained"
-					color="black"
-					className={classes.button}
-					startIcon={<AddAPhotoOutlinedIcon />}
-					onClick={handleOpen}
-				>
-					Add Post
-				</Button>
-			</Box>
+			<IconButton
+				disableRipple={true}
+				disableFocusRipple={true}
+				color="black"
+				className={classes.button}
+				onClick={handleOpen}
+			>
+				<AddAPhotoOutlinedIcon />
+			</IconButton>
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"

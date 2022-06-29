@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, LinearProgress } from '@material-ui/core';
 import PostDetail from '../components/postdetail/PostDetail';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'block',
 		margin: 'auto',
 		marginTop: '20px',
+		width: '60vw',
 	},
 }));
 
@@ -17,7 +18,6 @@ function Post(props) {
 	const dispatch = useDispatch();
 	const { id } = useParams();
 	const post = useSelector((state) => state.post[id]);
-	const ref = useRef();
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ function Post(props) {
 	}
 	return (
 		<div className={classes.root}>
-			<PostDetail post={post} ref={ref} />
+			<PostDetail post={post} />
 		</div>
 	);
 }

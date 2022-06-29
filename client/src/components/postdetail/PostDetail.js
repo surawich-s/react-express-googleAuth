@@ -8,6 +8,9 @@ import {
 	LinearProgress,
 	Typography,
 	Link,
+	Grid,
+	Avatar,
+	Hidden,
 } from '@material-ui/core';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -20,17 +23,33 @@ import CommentList from './CommentList';
 import CommentForm from './CommentForm';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		width: '80%',
-		margin: 'auto',
-	},
-
-	media: {
-		width: '100%',
+	rootmodal: {
+		width: '60vw',
 		height: 'auto',
-		// objectFit: "cover",
+		maxHeight: '80vh',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		marginTop: '2rem',
+		// position: 'absolute',
+		// top: '50%',
+		// left: '50%',
+		// transform: 'translate(-50%, -50%)',
+		// overflowY: 'scroll',
 	},
-
+	mediaModal: {
+		width: '100%',
+		height: '100%',
+		objectFit: 'cover',
+		maxHeight: '80vh',
+		[theme.breakpoints.down('sm')]: {
+			maxHeight: '40vh',
+		},
+	},
+	postDetailHeaderModal: {
+		width: '100%',
+		borderBottom: '1px solid #dbdbdb',
+		alignSelf: 'start',
+	},
 	actionbarContainer: {
 		width: '100%',
 		bottom: 0,
@@ -43,9 +62,21 @@ const useStyles = makeStyles((theme) => ({
 		paddingBottom: 0,
 		bottom: 0,
 	},
-
-	content: {
+	likeModal: {
 		paddingTop: 0,
+		paddingBottom: 0,
+	},
+	contentModal: {
+		paddingTop: 0,
+		overflow: 'auto',
+		flex: '1',
+		maxHeight: '50vh',
+		[theme.breakpoints.down('md')]: {
+			maxHeight: '50vh',
+		},
+		[theme.breakpoints.down('sm')]: {
+			maxHeight: '20vh',
+		},
 	},
 
 	postDescriptionContainer: {
@@ -74,42 +105,93 @@ function PostDetail({ post }) {
 		return <LinearProgress />;
 	} else {
 		return (
-			<Card className={classes.root}>
-				<PostDetailHeader post={post} />
-				<img
-					className={classes.media}
-					src={post.postImage}
-					alt={post.postDescription}
-				/>
-				<CardActions className={classes.actionbar}>
-					<LikeButton userId={user._id} postId={post._id} />
-					<IconButton aria-label="comment" onClick={handleFocus}>
-						<ChatBubbleOutlineIcon />
-					</IconButton>
-					<IconButton aria-label="save" style={{ marginLeft: 'auto' }}>
-						<BookmarkBorderIcon />
-					</IconButton>
-				</CardActions>
+			<Card className={classes.rootmodal}>
+				<Grid
+					container
+					style={{
+						height: '100%',
+						width: '100%',
+					}}
+				>
+					<Grid item xs={12} md={7}>
+						<Hidden mdUp>
+							<PostDetailHeader
+								post={post}
+								className={classes.postDetailHeaderModal}
+							/>
+						</Hidden>
+						<img
+							className={classes.mediaModal}
+							src={post.postImage}
+							alt={post.postDescription}
+						/>
+					</Grid>
 
-				<CardContent className={classes.content}>
-					<LikeDetail likesCount={post.likesCount} />
-					<Typography variant="body1" color="textPrimary" component="p">
-						<Link onClick={() => history.push(`/profile/${post._user._id}`)}>
-							{post._user.name}
-						</Link>{' '}
-						<span style={{ textDecorationStyle: 'none' }}>
-							{post.postDescription}
-						</span>
-					</Typography>
+					<Grid container item xs={12} md={5}>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'column',
+								height: '100%',
+								width: '100%',
+							}}
+						>
+							<Hidden smDown>
+								<PostDetailHeader
+									post={post}
+									className={classes.postDetailHeaderModal}
+								/>
+							</Hidden>
 
-					<CommentList
-						comments={post._comments.slice(0, 2)}
-						postId={post._id}
-						userId={user._id}
-					/>
-					{post._comments.length > 2 && <Typography>View More</Typography>}
-				</CardContent>
-				<CommentForm userId={user._id} postId={post._id} inputRef={inputRef} />
+							<CardContent className={classes.contentModal}>
+								<Grid container className={classes.postDescriptionContainer}>
+									<Grid item xs={2}>
+										<Avatar
+											aria-label="avatar"
+											alt={post._user.name}
+											src={post._user.picture}
+											onClick={() => history.push(`/profile/${post._user._id}`)}
+											className={classes.postDescriptionAvatar}
+										/>
+									</Grid>
+									<Grid item xs={10}>
+										<Typography variant="body1" color="textPrimary" component="p">
+											<Link onClick={() => history.push(`/profile/${post._user._id}`)}>
+												{post._user.name}
+											</Link>{' '}
+											<span style={{ textDecorationStyle: 'none' }}>
+												{post.postDescription}
+											</span>
+										</Typography>
+									</Grid>
+								</Grid>
+
+								<CommentList
+									comments={post._comments}
+									postId={post._id}
+									userId={user._id}
+									showAvatar={true}
+								/>
+							</CardContent>
+
+							<div className={classes.actionbarContainer}>
+								<CardActions className={classes.actionbar}>
+									<LikeButton userId={user._id} postId={post._id} />
+									<IconButton aria-label="comment" onClick={handleFocus}>
+										<ChatBubbleOutlineIcon />
+									</IconButton>
+									<IconButton aria-label="save" style={{ marginLeft: 'auto' }}>
+										<BookmarkBorderIcon />
+									</IconButton>
+								</CardActions>
+								<CardContent className={classes.likeModal}>
+									<LikeDetail likesCount={post.likesCount} />
+								</CardContent>
+								<CommentForm userId={user._id} postId={post._id} inputRef={inputRef} />
+							</div>
+						</div>
+					</Grid>
+				</Grid>
 			</Card>
 		);
 	}

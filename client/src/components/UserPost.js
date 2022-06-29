@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles, Typography, IconButton, Modal } from '@material-ui/core';
-import PostDetailModal from './postdetail/PostDetailModal';
+import { makeStyles, Typography, IconButton } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
 	imageContainer: {
@@ -36,14 +36,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function UserPost({ post }) {
-	const [open, setOpen] = useState(false);
 	const [hoverEffect, setHoverEffect] = useState(false);
-	const ref = React.useRef();
 	const classes = useStyles();
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const history = useHistory();
 
 	return (
 		<div className={classes.imageContainer}>
@@ -51,7 +46,7 @@ function UserPost({ post }) {
 				className={classes.image}
 				src={post.postImage}
 				alt={post._id}
-				onClick={() => setOpen(true)}
+				onClick={() => history.push(`/p/${post._id}`)}
 				onMouseEnter={() => setHoverEffect(true)}
 				onMouseLeave={() => setHoverEffect(false)}
 			/>
@@ -71,15 +66,6 @@ function UserPost({ post }) {
 					</div>
 				</div>
 			)}
-
-			<Modal
-				aria-labelledby="simple-modal-title"
-				aria-describedby="simple-modal-description"
-				open={open}
-				onClose={handleClose}
-			>
-				<PostDetailModal post={post} ref={ref} />
-			</Modal>
 		</div>
 	);
 }
