@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function Posts(props) {
+function Posts() {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const posts = useSelector((state) => Object.values(state.post));

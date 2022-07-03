@@ -80,7 +80,7 @@ function PostForm() {
 			<IconButton
 				disableRipple={true}
 				disableFocusRipple={true}
-				color="black"
+				color="primary"
 				className={classes.button}
 				onClick={handleOpen}
 			>

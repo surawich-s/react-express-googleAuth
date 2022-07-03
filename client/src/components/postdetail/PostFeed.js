@@ -81,19 +81,28 @@ function PostFeed({ post }) {
 					alt={post.postDescription}
 				/>
 				<CardActions className={classes.actionbar}>
-					<LikeButton userId={user._id} postId={post._id} />
-					<IconButton aria-label="comment" onClick={handleFocus}>
+					<LikeButton postId={post._id} />
+					<IconButton aria-label="comment" color="primary" onClick={handleFocus}>
 						<ChatBubbleOutlineIcon />
 					</IconButton>
-					<IconButton aria-label="save" style={{ marginLeft: 'auto' }}>
+					<IconButton
+						aria-label="save"
+						color="primary"
+						style={{ marginLeft: 'auto' }}
+					>
 						<BookmarkBorderIcon />
 					</IconButton>
 				</CardActions>
 
+				{/* Could Implement DRY here */}
+
 				<CardContent className={classes.content}>
 					<LikeDetail likesCount={post.likesCount} />
-					<Typography variant="body1" color="textPrimary" component="p">
-						<Link onClick={() => history.push(`/profile/${post._user._id}`)}>
+					<Typography variant="body1" color="primary" component="p">
+						<Link
+							style={{ fontWeight: 'bold' }}
+							onClick={() => history.push(`/profile/${post._user._id}`)}
+						>
 							{post._user.name}
 						</Link>{' '}
 						<span style={{ textDecorationStyle: 'none' }}>

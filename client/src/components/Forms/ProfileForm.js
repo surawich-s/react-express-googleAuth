@@ -136,7 +136,7 @@ function ProfileForm({ name, picture, profileDescription, id }) {
 					<Grid container xs={9}>
 						<Button
 							type="submit"
-							color="primary"
+							color="white"
 							variant="contained"
 							className={classes.submitButton}
 						>

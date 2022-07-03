@@ -33,13 +33,13 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			main: '#FF0000',
+			main: '#000000',
 		},
 		secondary: {
-			main: '#FFFFFF',
+			main: '#ff0000',
 		},
-		black: {
-			main: '#000000',
+		white: {
+			main: '#ffffff',
 		},
 	},
 	typography: {

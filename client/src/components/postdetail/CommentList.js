@@ -56,13 +56,17 @@ function CommentList({ comments, postId, userId, showAvatar }) {
 									</Grid>
 								)}
 
-								<Grid item xs={10} className={classes.commentDetailContainer}>
-									<Typography variant="body1" color="textPrimary" component="p">
-										<Link onClick={() => history.push(`/profile/${comment._user._id}`)}>
+								<Grid item xs={12} className={classes.commentDetailContainer}>
+									<Typography color="primary">
+										<Link
+											style={{ fontWeight: 'bold' }}
+											onClick={() => history.push(`/profile/${comment._user._id}`)}
+										>
 											{comment._user.name}
 										</Link>{' '}
-										{comment.commentDetail}
+										<span>{comment.commentDetail}</span>
 									</Typography>
+
 									<div style={{ marginLeft: 'auto' }}>
 										{userId === comment._user._id && (
 											<SettingButton
@@ -74,7 +78,7 @@ function CommentList({ comments, postId, userId, showAvatar }) {
 										)}
 									</div>
 								</Grid>
-								<Grid item xs={2}></Grid>
+								{/* <Grid item xs={2}></Grid>
 								<Grid item xs={10}>
 									<Typography
 										className={classes.date}
@@ -84,7 +88,7 @@ function CommentList({ comments, postId, userId, showAvatar }) {
 									>
 										{comment.createdAt}
 									</Typography>
-								</Grid>
+								</Grid> */}
 							</Grid>
 						</>
 					))}

@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 	},
+	loginPanel: {
+		display: 'flex',
+		alignItems: 'center',
+	},
 	avatar: {
 		marginRight: theme.spacing(2),
 	},
@@ -36,8 +40,7 @@ const useStyles = makeStyles((theme) => ({
 function Layout({ children }) {
 	const classes = useStyles();
 
-	const { user, userLogin } = useSelector((state) => ({
-		user: state.user.fetchedUser,
+	const { userLogin } = useSelector((state) => ({
 		userLogin: state.user.userInfo,
 	}));
 	const dispatch = useDispatch();
@@ -46,19 +49,6 @@ function Layout({ children }) {
 	useEffect(() => {
 		dispatch(googleLogin());
 	}, [dispatch]);
-
-	const renderedSignIn = () => {
-		if (userLogin) {
-			return (
-				<Avatar
-					alt={userLogin.name}
-					src={userLogin.picture}
-					className={classes.avatar}
-					onClick={() => history.push(`/profile/${userLogin._id}`)}
-				/>
-			);
-		}
-	};
 
 	const handleLogin = (e) => {
 		e.preventDefault();
@@ -79,7 +69,7 @@ function Layout({ children }) {
 						<IconButton
 							disableRipple={true}
 							disableFocusRipple={true}
-							color="black"
+							color="primary"
 							aria-label="logo"
 							onClick={() => history.push('/')}
 						>
@@ -88,13 +78,22 @@ function Layout({ children }) {
 						</IconButton>
 					</Box>
 
-					<PostForm />
-					{renderedSignIn()}
-
-					{user ? (
-						<Button onClick={handleLogout}>Log out</Button>
+					{userLogin ? (
+						<Box className={classes.loginPanel}>
+							<PostForm />
+							<Avatar
+								alt={userLogin.name}
+								src={userLogin.picture}
+								className={classes.avatar}
+								onClick={() => history.push(`/profile/${userLogin._id}`)}
+							/>
+							<Button onClick={handleLogout}>Log out</Button>
+						</Box>
 					) : (
-						<Button onClick={handleLogin}>Login Bro</Button>
+						<Box className={classes.loginPanel}>
+							<Button onClick={handleLogin}>Log in</Button>
+							<Button onClick={handleLogin}>Sign up</Button>
+						</Box>
 					)}
 				</Toolbar>
 			</AppBar>

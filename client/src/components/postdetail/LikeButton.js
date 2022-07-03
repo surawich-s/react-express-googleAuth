@@ -10,6 +10,8 @@ function LikeButton({ postId }) {
 	const [liked, setLiked] = useState(false);
 	const dispatch = useDispatch();
 
+	// TODO: add userLogin check if user can like or not
+
 	const handleLike = (e) => {
 		e.preventDefault();
 		if (liked) {
@@ -27,15 +29,11 @@ function LikeButton({ postId }) {
 	});
 
 	return (
-		<IconButton
-			aria-label="like"
-			onClick={handleLike}
-			// color={liked ? 'primary' : 'black'}
-		>
+		<IconButton aria-label="like" onClick={handleLike}>
 			{liked ? (
-				<FavoriteIcon color="primary" />
+				<FavoriteIcon color="secondary" />
 			) : (
-				<FavoriteBorderIcon color="black" />
+				<FavoriteBorderIcon color="primary" />
 			)}
 		</IconButton>
 	);

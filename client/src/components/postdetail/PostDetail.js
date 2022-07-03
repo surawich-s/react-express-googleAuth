@@ -155,13 +155,14 @@ function PostDetail({ post }) {
 										/>
 									</Grid>
 									<Grid item xs={10}>
-										<Typography variant="body1" color="textPrimary" component="p">
-											<Link onClick={() => history.push(`/profile/${post._user._id}`)}>
+										<Typography variant="body1" color="primary" component="p">
+											<Link
+												style={{ fontWeight: 'bold' }}
+												onClick={() => history.push(`/profile/${post._user._id}`)}
+											>
 												{post._user.name}
 											</Link>{' '}
-											<span style={{ textDecorationStyle: 'none' }}>
-												{post.postDescription}
-											</span>
+											<span>{post.postDescription}</span>
 										</Typography>
 									</Grid>
 								</Grid>
@@ -177,10 +178,14 @@ function PostDetail({ post }) {
 							<div className={classes.actionbarContainer}>
 								<CardActions className={classes.actionbar}>
 									<LikeButton userId={user._id} postId={post._id} />
-									<IconButton aria-label="comment" onClick={handleFocus}>
+									<IconButton aria-label="comment" color="primary" onClick={handleFocus}>
 										<ChatBubbleOutlineIcon />
 									</IconButton>
-									<IconButton aria-label="save" style={{ marginLeft: 'auto' }}>
+									<IconButton
+										aria-label="save"
+										color="primary"
+										style={{ marginLeft: 'auto' }}
+									>
 										<BookmarkBorderIcon />
 									</IconButton>
 								</CardActions>

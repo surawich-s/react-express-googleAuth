@@ -22,7 +22,10 @@ function PostDetailHeader({ post }) {
 				</IconButton>
 			}
 			title={
-				<Typography onClick={() => history.push(`/profile/${post._user._id}`)}>
+				<Typography
+					style={{ fontWeight: 'bold' }}
+					onClick={() => history.push(`/profile/${post._user._id}`)}
+				>
 					{post._user.name}
 				</Typography>
 			}

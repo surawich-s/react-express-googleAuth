@@ -3,7 +3,12 @@ import { Typography } from '@material-ui/core';
 
 function LikeDetail({ likesCount }) {
 	return (
-		<Typography variant="body1" color="textPrimary" component="p">
+		<Typography
+			style={{ fontWeight: 'bold' }}
+			color="primary"
+			fontWeight="fontWeightBold"
+			component="p"
+		>
 			{likesCount} likes
 		</Typography>
 	);
