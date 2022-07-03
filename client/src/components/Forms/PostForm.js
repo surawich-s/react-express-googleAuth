@@ -100,12 +100,7 @@ function PostForm() {
 			>
 				<Fade in={open}>
 					<Container className={classes.form}>
-						<Typography
-							variant="h6"
-							color="textSecondary"
-							component="h2"
-							gutterBottom
-						>
+						<Typography variant="h6" color="primary" component="h2" gutterBottom>
 							Create a New Post
 						</Typography>
 						<form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -130,7 +125,7 @@ function PostForm() {
 
 							<Button
 								type="submit"
-								color="secondary"
+								color="white"
 								variant="contained"
 								endIcon={<KeyboardArrowRightIcon />}
 							>
