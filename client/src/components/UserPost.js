@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: 'rows',
 		alignItems: 'center',
 	},
+	whiteTextAndButton: {
+		color: 'white',
+	},
 }));
 
 function UserPost({ post }) {
@@ -53,16 +56,26 @@ function UserPost({ post }) {
 			{hoverEffect && (
 				<div className={classes.imageHoverDetail}>
 					<div className={classes.imageHoverDetailElement}>
-						<IconButton aria-label="likesCount">
-							<FavoriteIcon color="secondary" />
+						<IconButton
+							className={classes.whiteTextAndButton}
+							aria-label="likesCount"
+						>
+							<FavoriteIcon />
 						</IconButton>
-						<Typography color="secondary">{post.likesCount}</Typography>
+						<Typography className={classes.whiteTextAndButton}>
+							{post.likesCount}
+						</Typography>
 					</div>
 					<div className={classes.imageHoverDetailElement}>
-						<IconButton aria-label="commentsCount">
-							<ChatBubbleIcon color="secondary" />
+						<IconButton
+							className={classes.whiteTextAndButton}
+							aria-label="commentsCount"
+						>
+							<ChatBubbleIcon />
 						</IconButton>
-						<Typography color="secondary">{post._comments.length}</Typography>
+						<Typography className={classes.whiteTextAndButton}>
+							{post._comments.length}
+						</Typography>
 					</div>
 				</div>
 			)}

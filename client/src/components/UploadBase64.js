@@ -42,9 +42,9 @@ function UploadBase64({ defaultPicture, handleDoneUpload }) {
 			/>
 			<label htmlFor="upload-button">
 				<Button
-					variant="raised"
+					variant="outlined"
 					component="span"
-					color="primary"
+					color="white"
 					//   className={classes.button}
 				>
 					Change Profile Photo

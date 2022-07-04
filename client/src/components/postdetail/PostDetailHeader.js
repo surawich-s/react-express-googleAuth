@@ -1,5 +1,11 @@
 import React from 'react';
-import { CardHeader, Avatar, IconButton, Typography } from '@material-ui/core';
+import {
+	CardHeader,
+	Avatar,
+	IconButton,
+	Typography,
+	Link,
+} from '@material-ui/core';
 import SettingButton from './SettingButton';
 import { useHistory } from 'react-router';
 
@@ -22,11 +28,13 @@ function PostDetailHeader({ post }) {
 				</IconButton>
 			}
 			title={
-				<Typography
-					style={{ fontWeight: 'bold' }}
-					onClick={() => history.push(`/profile/${post._user._id}`)}
-				>
-					{post._user.name}
+				<Typography style={{ fontWeight: 'bold' }}>
+					<Link
+						underline="none"
+						onClick={() => history.push(`/profile/${post._user._id}`)}
+					>
+						{post._user.name}
+					</Link>
 				</Typography>
 			}
 		/>

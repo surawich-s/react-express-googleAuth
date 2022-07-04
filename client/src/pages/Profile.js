@@ -121,6 +121,7 @@ function Profile() {
 										<Button
 											variant="outlined"
 											onClick={() => history.push(`/profile/${id}/edit`)}
+											style={{ backgroundColor: 'transparent' }}
 										>
 											Edit Profile
 										</Button>

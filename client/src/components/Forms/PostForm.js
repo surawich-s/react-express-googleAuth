@@ -83,6 +83,7 @@ function PostForm() {
 				color="primary"
 				className={classes.button}
 				onClick={handleOpen}
+				style={{ backgroundColor: 'transparent' }}
 			>
 				<AddAPhotoOutlinedIcon />
 			</IconButton>
@@ -126,7 +127,7 @@ function PostForm() {
 							<Button
 								type="submit"
 								color="white"
-								variant="contained"
+								variant="outlined"
 								endIcon={<KeyboardArrowRightIcon />}
 							>
 								Submit

@@ -137,7 +137,7 @@ function ProfileForm({ name, picture, profileDescription, id }) {
 						<Button
 							type="submit"
 							color="white"
-							variant="contained"
+							variant="outlined"
 							className={classes.submitButton}
 						>
 							Save

@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
 	appbar: {
 		width: '100%',
 		marginBottom: '0',
+		minWidth: '100vw',
 		backgroundColor: '#fefefe',
 	},
+	toolbar: {},
 	logoButton: {
 		flexGrow: 1,
 		display: 'flex',
@@ -64,7 +66,7 @@ function Layout({ children }) {
 	return (
 		<>
 			<AppBar position="sticky" className={classes.appbar} elevation={1}>
-				<Toolbar>
+				<Toolbar className={classes.toolbar}>
 					<Box className={classes.logoButton}>
 						<IconButton
 							disableRipple={true}
@@ -72,6 +74,7 @@ function Layout({ children }) {
 							color="primary"
 							aria-label="logo"
 							onClick={() => history.push('/')}
+							style={{ backgroundColor: 'transparent' }}
 						>
 							<InstagramIcon />
 							Instagram

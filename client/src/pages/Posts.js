@@ -12,6 +12,7 @@ import PostFeed from '../components/postdetail/PostFeed';
 const useStyles = makeStyles((theme) => ({
 	postsContainer: {
 		width: '50vw',
+		minWidth: '400px',
 		backgroundColor: '#FAFAFA',
 		paddingTop: '10px',
 		paddingLeft: 0,

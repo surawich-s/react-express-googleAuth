@@ -30,11 +30,6 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		marginTop: '2rem',
-		// position: 'absolute',
-		// top: '50%',
-		// left: '50%',
-		// transform: 'translate(-50%, -50%)',
-		// overflowY: 'scroll',
 	},
 	mediaModal: {
 		width: '100%',
